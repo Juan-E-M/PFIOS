@@ -1,0 +1,70 @@
+# Xcode
+#
+# Ignora archivos generados por Xcode y el sistema de compilación
+
+# Archivos de compilación de Xcode
+build/
+
+# Resultados de ejecución de la aplicación
+*.xcresult/
+*.xcworkspace/
+*.xcuserstate
+
+# Archivos generados por Xcode
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Cache de Xcode
+*.xcuserdatad
+
+# Dependencias y administración de dependencias
+
+# Carpeta de Pods generada por CocoaPods
+Pods/
+
+# Archivo de bloqueo de Podfile
+Podfile.lock
+
+# Archivos de configuración de CocoaPods
+*.xcconfig
+
+# Swift Package Manager
+#
+# Ignora los directorios y archivos generados por Swift Package Manager
+
+# Carpeta de dependencias
+.build/
+
+# Directorio de productos generados
+DerivedData/
+.build/
+
+# Dependencias adicionales
+Package.resolved
+
+# Dependencias de desarrollo
+*.xcodeproj/
+
+# Otros
+#
+# Ignora cualquier otro archivo o carpeta que no sea necesario para el 
+control de versiones
+
+# Archivos de usuario específicos de Xcode
+*.xcuserstate
+
+# Archivos de configuración de Xcode
+*.xcworkspace/contents.xcworkspacedata
+
+# Archivos de configuración de Xcode
+*.xcodeproj/xcuserdata/
+
+# Almacenamiento de datos para la vista previa de SwiftUI
+*.swiftui
+
+# Almacenamiento de datos para el inspector de objetos de SwiftUI
+*.xcplayground
+
