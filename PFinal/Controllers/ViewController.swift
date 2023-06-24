@@ -17,6 +17,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
+        loginGoogleButton.layer.cornerRadius = 5.0
+        
+        loginButton.layer.cornerRadius = 5.0
+    
+        
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
@@ -26,7 +33,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    
+    @IBOutlet weak var loginGoogleButton: UIButton!
     @IBAction func loginTapped(_ sender: Any) {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!){(user, error) in print("Intentando iniciar sesiòn")
             if error != nil{
