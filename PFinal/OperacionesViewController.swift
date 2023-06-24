@@ -9,6 +9,18 @@ import UIKit
 
 class OperacionesViewController: UIViewController {
 
+    @IBAction func btncombustible(_ sender: Any) {
+        performSegue(withIdentifier: "fuelSegue", sender: nil)
+    }
+    @IBAction func btntraslado(_ sender: Any) {
+        performSegue(withIdentifier: "moveSegue", sender: nil)
+    }
+    @IBAction func btnpeaje(_ sender: Any) {
+        performSegue(withIdentifier: "tariffSegue", sender: nil)
+    }
+    @IBAction func btnotros(_ sender: Any) {
+        performSegue(withIdentifier: "othersSegue", sender: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
