@@ -204,10 +204,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="tNS-2n-UoC"/>
                     <connections>
+                        <outlet property="cargoSelect" destination="4Ol-5E-GVf" id="U3P-WU-dCw"/>
                         <outlet property="confirmPasswordTextField" destination="Kg8-Mm-YKh" id="bNk-aN-zkF"/>
-                        <outlet property="emailTextField" destination="ecQ-if-sH3" id="1BL-V0-DxK"/>
+                        <outlet property="emailTextField" destination="Bfx-73-QK7" id="ypN-W0-oJD"/>
                         <outlet property="passwordTextField" destination="bvZ-LN-JWJ" id="1nK-lu-Bve"/>
                         <outlet property="registerButton" destination="nL0-LQ-ocw" id="ZHy-wZ-QLJ"/>
+                        <outlet property="userTextField" destination="ecQ-if-sH3" id="gHB-IK-2ww"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e55-Wj-VQx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -486,7 +488,7 @@
         <!--Item-->
         <scene sceneID="Whm-hI-aSs">
             <objects>
-                <viewController id="Ae4-TZ-znF" sceneMemberID="viewController">
+                <viewController id="Ae4-TZ-znF" customClass="UserViewController" customModule="PFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ziX-4U-znu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

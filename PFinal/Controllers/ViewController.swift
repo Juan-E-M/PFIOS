@@ -76,8 +76,13 @@ class ViewController: UIViewController {
                     guard let user = authResult?.user else {
                         return
                     }
-                    let ref = Database.database().reference().child("usuarios").child(user.uid).child("email")
-                    ref.setValue(user.email) { (error, _) in
+                    var profile = [
+                        "user": user.displayName,
+                        "email": user.email,
+                        "cargo": "Trabajador de campo",
+                    ]
+                    let ref = Database.database().reference().child("usuarios").child(user.uid).child("profile")
+                    ref.setValue(profile) { (error, _) in
                         if let error = error {
                             print("Error al guardar los datos del usuario: \(error)")
                         } else {

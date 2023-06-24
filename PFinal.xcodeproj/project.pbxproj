@@ -13,6 +13,7 @@
 		AB10D9F52A4767B100DC4134 /* CombustibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */; };
 		AB10D9F72A4767C600DC4134 /* PeajeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */; };
 		AB10D9F92A4767E300DC4134 /* TrasladoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */; };
+		B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E97762A478C3B00DB305F /* UserViewController.swift */; };
 		B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */; };
 		B9B959172A35042D002A22FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B959162A35042D002A22FE /* AppDelegate.swift */; };
 		B9B959192A35042D002A22FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B959182A35042D002A22FE /* SceneDelegate.swift */; };
@@ -33,6 +34,7 @@
 		AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombustibleViewController.swift; sourceTree = "<group>"; };
 		AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeajeViewController.swift; sourceTree = "<group>"; };
 		AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrasladoViewController.swift; sourceTree = "<group>"; };
+		B98E97762A478C3B00DB305F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B9B959132A35042D002A22FE /* PFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B959162A35042D002A22FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			children = (
 				B9B9591A2A35042D002A22FE /* ViewController.swift */,
 				B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */,
+				B98E97762A478C3B00DB305F /* UserViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				B9B9591B2A35042D002A22FE /* ViewController.swift in Sources */,
 				B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */,
 				AB10D9F52A4767B100DC4134 /* CombustibleViewController.swift in Sources */,
+				B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */,
 				B9B959212A35042D002A22FE /* PFinal.xcdatamodeld in Sources */,
 				AB10D9F12A47677C00DC4134 /* OperacionesViewController.swift in Sources */,
 				AB10D9F72A4767C600DC4134 /* PeajeViewController.swift in Sources */,
