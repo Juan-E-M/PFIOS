@@ -17,6 +17,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
+        loginGoogleButton.layer.cornerRadius = 5.0
+        
+        loginButton.layer.cornerRadius = 5.0
+    
+        
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
@@ -26,7 +33,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    
+    @IBOutlet weak var loginGoogleButton: UIButton!
     @IBAction func loginTapped(_ sender: Any) {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!){(user, error) in print("Intentando iniciar sesiòn")
             if error != nil{
@@ -65,6 +72,25 @@ class ViewController: UIViewController {
                     return
                 } else {
                     print("Logeo por Google de forma correcta")
+                    
+                    guard let user = authResult?.user else {
+                        return
+                    }
+                    var profile = [
+                        "user": user.displayName,
+                        "email": user.email,
+                        "cargo": "Trabajador de campo",
+                    ]
+                    let ref = Database.database().reference().child("usuarios").child(user.uid).child("profile")
+                    ref.setValue(profile) { (error, _) in
+                        if let error = error {
+                            print("Error al guardar los datos del usuario: \(error)")
+                        } else {
+                            print("Datos del usuario guardados exitosamente")
+                        }
+                    }
+                    
+                    
                 }
             }
         }
