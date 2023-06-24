@@ -65,6 +65,20 @@ class ViewController: UIViewController {
                     return
                 } else {
                     print("Logeo por Google de forma correcta")
+                    
+                    guard let user = authResult?.user else {
+                        return
+                    }
+                    let ref = Database.database().reference().child("usuarios").child(user.uid).child("email")
+                    ref.setValue(user.email) { (error, _) in
+                        if let error = error {
+                            print("Error al guardar los datos del usuario: \(error)")
+                        } else {
+                            print("Datos del usuario guardados exitosamente")
+                        }
+                    }
+                    
+                    
                 }
             }
         }
