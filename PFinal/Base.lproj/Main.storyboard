@@ -282,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgQ-9W-cGi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1381" y="-649"/>
+            <point key="canvasLocation" x="1509" y="-585"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="zY5-b2-Uig">
@@ -387,7 +387,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yq0-y1-RAY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="804" y="785"/>
+            <point key="canvasLocation" x="803" y="785"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Whm-hI-aSs">
@@ -402,7 +402,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4A-Ea-2xF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="-179"/>
+            <point key="canvasLocation" x="32" y="-585"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WLD-ce-3bs">
@@ -588,7 +588,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdG-Mu-XqX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1510" y="785"/>
+            <point key="canvasLocation" x="2414" y="785"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Uu1-sO-NOr">
@@ -657,7 +657,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5W-nX-1zm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="511"/>
+            <point key="canvasLocation" x="3330" y="785"/>
         </scene>
     </scenes>
     <resources>
