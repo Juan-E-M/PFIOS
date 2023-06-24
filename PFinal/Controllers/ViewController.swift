@@ -40,16 +40,16 @@ class ViewController: UIViewController {
                 print("Se presento el siguiente error: \(error)")
                 let alerta = UIAlertController(title: "Error en el inicio de sesión", message: "El Usuario o contraseña son inválidos", preferredStyle: .alert)
                 let btnCancelar = UIAlertAction(title: "Cancelar", style: .default, handler: nil)
-                let btnCrear = UIAlertAction(title: "Crear", style: .default, handler: nil /*{(UIAlertAction) in
-                    self.performSegue(withIdentifier: "crearcuentasegue", sender: nil)
-                    }*/
+                let btnCrear = UIAlertAction(title: "Crear", style: .default, handler: {(UIAlertAction) in
+                    self.performSegue(withIdentifier: "loginToRegisterSegue", sender: nil)
+                    }
                 )
                 alerta.addAction(btnCancelar)
                 alerta.addAction(btnCrear)
                 self.present(alerta, animated: true, completion: nil)
             }else{
                 print("Inicio de sesiòn exitoso")
-                //self.performSegue(withIdentifier: "iniciarsesionsegue", sender: nil)
+                self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
         }
     }
@@ -87,6 +87,7 @@ class ViewController: UIViewController {
                             print("Error al guardar los datos del usuario: \(error)")
                         } else {
                             print("Datos del usuario guardados exitosamente")
+                            self.performSegue(withIdentifier: "loginSegue", sender: nil)
                         }
                     }
                     
@@ -95,5 +96,10 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func registerTapped(_ sender: Any) {
+        self.performSegue(withIdentifier: "loginToRegisterSegue", sender: nil)
+    }
+    
 }
 

@@ -49,10 +49,10 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     Database.database().reference().child("usuarios").child(user!.user.uid).child("profile").setValue(profile)
 
                     let alerta = UIAlertController(title: "Successfull", message: "Usuario: \(self.emailTextField.text!) se creó correctamente.", preferredStyle: .alert)
-                    let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: nil
-                    /*{(UIAlertAction) in
-                        self.performSegue(withIdentifier: "registrarusuariosegue", sender: nil)
-                    }*/
+                    let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: 
+                    {(UIAlertAction) in
+                        self.performSegue(withIdentifier: "registerSegue", sender: nil)
+                    }
                     )
                     alerta.addAction(btnOK)
                     self.present(alerta, animated: true, completion: nil)
