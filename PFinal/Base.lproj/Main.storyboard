@@ -456,6 +456,9 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Tomar Foto"/>
+                                        <connections>
+                                            <action selector="facturaFotoTapped:" destination="Bal-ZJ-FA2" eventType="touchUpInside" id="90E-50-nJf"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -509,6 +512,9 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Tomar Foto">
                                             <color key="baseForegroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="kmFotoTapped:" destination="Bal-ZJ-FA2" eventType="touchUpInside" id="uRf-P0-nnc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -518,6 +524,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Enviar"/>
+                                <connections>
+                                    <action selector="enviarTapped:" destination="Bal-ZJ-FA2" eventType="touchUpInside" id="2Uj-5N-fYU"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sqo-wY-VOD"/>
@@ -550,6 +559,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5oh-4V-usn"/>
+                    <connections>
+                        <outlet property="facturaImagenTextField" destination="CoA-gf-Bb0" id="Ivd-lU-s8t"/>
+                        <outlet property="facturaTextField" destination="S9r-pB-02R" id="s8V-Cd-HcQ"/>
+                        <outlet property="kmImagemButton" destination="iC1-eq-ibM" id="ITs-3r-ofF"/>
+                        <outlet property="kmTextField" destination="a5f-r6-UXl" id="My8-px-HPL"/>
+                        <outlet property="montoTotalTextField" destination="zgJ-LG-Tcd" id="Bnr-TB-vZf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgQ-9W-cGi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
