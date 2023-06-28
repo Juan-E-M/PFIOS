@@ -9,6 +9,14 @@ import UIKit
 
 class PeajeViewController: UIViewController {
 
+    @IBOutlet weak var TextTotal: UITextField!
+    @IBOutlet weak var TextDestino: UITextField!
+    @IBOutlet weak var TextFactura: UITextField!
+    @IBAction func BtnEnviarPeaje(_ sender: Any) {
+        
+        print(TextTotal.text!)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
