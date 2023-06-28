@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 import FirebaseStorage
 
 class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
@@ -21,17 +22,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     
     @IBOutlet weak var galeria: UIImageView!
     @IBAction func BtnEnviarPeaje(_ sender: Any) {
-        let imagenesFolder = Storage.storage().reference().child("imagenes")
-        let imagenData =  imagen.jpegData(compressionQuality: 0.5)
-        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
-                    if error != nil {
-                        self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
-                        
-                        print("Ocurrió un error al subir imagen: \(error)")
-                    } else {
-                        print("Todo salio bien")
-                    }
-                }
+        enviardatos(selected!)
     }
     @IBAction func BtnImagen(_ sender: Any) {
         imagePicker.sourceType = .savedPhotosAlbum
@@ -40,17 +31,14 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        
         selected = image
-        print("========================")
-        print(selected?.size)
         imagePicker.dismiss(animated: true, completion: nil)
     }
     func enviardatos(_ imagen:UIImage){
         galeria.image = imagen
         let imagenesFolder = Storage.storage().reference().child("imagenes")
         let imagenData =  imagen.jpegData(compressionQuality: 0.5)
-        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
+                let cargarImagen = imagenesFolder.child("imagenes.jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
                     if error != nil {
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
                         
