@@ -6,24 +6,68 @@
 //
 
 import UIKit
+import FirebaseStorage
 
-class PeajeViewController: UIViewController {
-
-    @IBOutlet weak var TextTotal: UITextField!
-    @IBOutlet weak var TextDestino: UITextField!
-    @IBOutlet weak var TextFactura: UITextField!
-    @IBAction func BtnEnviarPeaje(_ sender: Any) {
-        
-        print(TextTotal.text!)
-    }
+class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        imagePicker.delegate = self
         // Do any additional setup after loading the view.
     }
+    var imagePicker = UIImagePickerController()
+    var selected :UIImage?
+    @IBOutlet weak var TextFactura: UITextField!
     
-
+    @IBOutlet weak var galeria: UIImageView!
+    @IBAction func BtnEnviarPeaje(_ sender: Any) {
+        let imagenesFolder = Storage.storage().reference().child("imagenes")
+        let imagenData =  imagen.jpegData(compressionQuality: 0.5)
+        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
+                    if error != nil {
+                        self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
+                        
+                        print("Ocurrió un error al subir imagen: \(error)")
+                    } else {
+                        print("Todo salio bien")
+                    }
+                }
+    }
+    @IBAction func BtnImagen(_ sender: Any) {
+        imagePicker.sourceType = .savedPhotosAlbum
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        
+        selected = image
+        print("========================")
+        print(selected?.size)
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    func enviardatos(_ imagen:UIImage){
+        galeria.image = imagen
+        let imagenesFolder = Storage.storage().reference().child("imagenes")
+        let imagenData =  imagen.jpegData(compressionQuality: 0.5)
+        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
+                    if error != nil {
+                        self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
+                        
+                        print("Ocurrió un error al subir imagen: \(error)")
+                    } else {
+        
+                    }
+                    }
+    }
+    
+    func mostrarAlerta (titulo: String, mensaje: String, accion: String){
+            let alerta = UIAlertController(title: titulo, message: mensaje,
+                                           preferredStyle: .alert )
+            let btnCANCELOK = UIAlertAction(title: accion, style: .default, handler: nil)
+            alerta.addAction(btnCANCELOK)
+            present(alerta,  animated: true, completion: nil)
+        }
     /*
     // MARK: - Navigation
 
