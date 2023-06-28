@@ -30,6 +30,8 @@ class ViewController: UIViewController {
     }
     
     //OULETS
+    
+    @IBOutlet weak var swVerPass: UISwitch!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -100,6 +102,11 @@ class ViewController: UIViewController {
     @IBAction func registerTapped(_ sender: Any) {
         self.performSegue(withIdentifier: "loginToRegisterSegue", sender: nil)
     }
+    
+    @IBAction func swVerTapped(_ sender: UISwitch) {
+        passwordTextField.isSecureTextEntry = !sender.isOn
+    }
+    
     
 }
 

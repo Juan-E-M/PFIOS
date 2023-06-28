@@ -101,6 +101,9 @@
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ccg-rg-QH3">
                                         <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="swVerTapped:" destination="BYZ-38-t0r" eventType="valueChanged" id="TFc-8P-OTM"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ver contraseña" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5J-lR-2jS">
                                         <rect key="frame" x="57" y="0.0" width="120" height="31"/>
@@ -149,6 +152,7 @@
                         <outlet property="loginButton" destination="Igh-JI-yeB" id="NSf-M9-v0I"/>
                         <outlet property="loginGoogleButton" destination="2F4-C0-QJI" id="1yy-Ze-Yxe"/>
                         <outlet property="passwordTextField" destination="hWd-gW-9Ud" id="t1g-se-6tq"/>
+                        <outlet property="swVerPass" destination="ccg-rg-QH3" id="hMm-PK-Stu"/>
                         <segue destination="ZqG-K7-7i8" kind="presentation" identifier="loginSegue" id="GAt-LI-bzT"/>
                         <segue destination="DXw-eM-oMn" kind="show" identifier="loginToRegisterSegue" id="wgg-Qn-XV3"/>
                     </connections>
@@ -258,6 +262,9 @@
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uPS-9H-tF4">
                                         <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="swVerTapped:" destination="DXw-eM-oMn" eventType="valueChanged" id="PMx-rp-J4C"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ver contraseña" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fv-bp-RmF">
                                         <rect key="frame" x="57" y="0.0" width="120" height="31"/>
@@ -316,6 +323,7 @@
                         <outlet property="emailTextField" destination="Bfx-73-QK7" id="ypN-W0-oJD"/>
                         <outlet property="passwordTextField" destination="bvZ-LN-JWJ" id="1nK-lu-Bve"/>
                         <outlet property="registerButton" destination="nL0-LQ-ocw" id="ZHy-wZ-QLJ"/>
+                        <outlet property="swVerPass" destination="uPS-9H-tF4" id="1B2-IN-mxk"/>
                         <outlet property="userTextField" destination="ecQ-if-sH3" id="gHB-IK-2ww"/>
                         <segue destination="ZqG-K7-7i8" kind="presentation" identifier="registerSegue" id="730-5V-mi6"/>
                     </connections>
@@ -1339,7 +1347,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GAt-LI-bzT"/>
+        <segue reference="730-5V-mi6"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="ccip_splash" width="720" height="720"/>

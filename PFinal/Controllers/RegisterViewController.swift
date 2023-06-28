@@ -26,6 +26,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     
+    @IBOutlet weak var swVerPass: UISwitch!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -105,7 +106,12 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return label
     }
 
-
+    
+    @IBAction func swVerTapped(_ sender: UISwitch) {
+        passwordTextField.isSecureTextEntry = !sender.isOn
+        confirmPasswordTextField.isSecureTextEntry = !sender.isOn
+    }
+    
     
 
 }
