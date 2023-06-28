@@ -752,6 +752,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Enviar"/>
+                                <connections>
+                                    <action selector="BtnEnviarPeaje:" destination="Ykf-Gg-gTU" eventType="touchUpInside" id="2iM-Yg-BzQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="avm-XY-MNg"/>
@@ -782,6 +785,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fr2-Cm-QEJ"/>
+                    <connections>
+                        <outlet property="TextDestino" destination="rSp-UT-KuF" id="Nof-vo-qC1"/>
+                        <outlet property="TextFactura" destination="d7k-oP-5tz" id="qn8-GO-F9E"/>
+                        <outlet property="TextTotal" destination="Yxh-oI-Vei" id="Uc8-7o-XjH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbu-zc-07N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
