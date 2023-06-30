@@ -18,9 +18,8 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     }
     var imagePicker = UIImagePickerController()
     var selected :UIImage?
-    @IBOutlet weak var TextFactura: UITextField!
     
-    @IBOutlet weak var galeria: UIImageView!
+    @IBOutlet weak var TextFactura: UITextField!
     @IBAction func BtnEnviarPeaje(_ sender: Any) {
         enviardatos(selected!)
     }
@@ -35,10 +34,9 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         imagePicker.dismiss(animated: true, completion: nil)
     }
     func enviardatos(_ imagen:UIImage){
-        galeria.image = imagen
-        let imagenesFolder = Storage.storage().reference().child("imagenes")
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("peajes")
         let imagenData =  imagen.jpegData(compressionQuality: 0.5)
-                let cargarImagen = imagenesFolder.child("imagenes.jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
+        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
                     if error != nil {
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
                         
