@@ -78,12 +78,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B99128A72A50D70600DCB044 /* OperacionesControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */,
+				AB10D9F22A47679E00DC4134 /* OtrosViewController.swift */,
+				AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */,
+				AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */,
+			);
+			path = OperacionesControllers;
+			sourceTree = "<group>";
+		};
 		B9B328D92A3E15D9000AAC91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B99128A72A50D70600DCB044 /* OperacionesControllers */,
 				B9B9591A2A35042D002A22FE /* ViewController.swift */,
 				B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */,
 				B98E97762A478C3B00DB305F /* UserViewController.swift */,
+				AB10D9F02A47677C00DC4134 /* OperacionesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -114,11 +127,6 @@
 				B9B959162A35042D002A22FE /* AppDelegate.swift */,
 				B9B959182A35042D002A22FE /* SceneDelegate.swift */,
 				B9B9591C2A35042D002A22FE /* Main.storyboard */,
-				AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */,
-				AB10D9F22A47679E00DC4134 /* OtrosViewController.swift */,
-				AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */,
-				AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */,
-				AB10D9F02A47677C00DC4134 /* OperacionesViewController.swift */,
 				B9B959222A35042E002A22FE /* Assets.xcassets */,
 				B9B959242A35042E002A22FE /* LaunchScreen.storyboard */,
 				B9B959272A35042E002A22FE /* Info.plist */,
