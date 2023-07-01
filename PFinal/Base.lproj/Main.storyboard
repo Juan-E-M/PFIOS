@@ -560,9 +560,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="5oh-4V-usn"/>
                     <connections>
-                        <outlet property="facturaImagenTextField" destination="CoA-gf-Bb0" id="Ivd-lU-s8t"/>
+                        <outlet property="facturaImageButton" destination="CoA-gf-Bb0" id="Fx6-7M-NOL"/>
                         <outlet property="facturaTextField" destination="S9r-pB-02R" id="s8V-Cd-HcQ"/>
-                        <outlet property="kmImagemButton" destination="iC1-eq-ibM" id="ITs-3r-ofF"/>
+                        <outlet property="kmImageButton" destination="iC1-eq-ibM" id="fLd-IL-2T3"/>
                         <outlet property="kmTextField" destination="a5f-r6-UXl" id="My8-px-HPL"/>
                         <outlet property="montoTotalTextField" destination="zgJ-LG-Tcd" id="Bnr-TB-vZf"/>
                     </connections>
