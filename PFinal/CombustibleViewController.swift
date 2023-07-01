@@ -4,26 +4,155 @@
 //
 //  Created by Mac20 on 24/06/23.
 //
-
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseStorage
+import FirebaseDatabase
 
-class CombustibleViewController: UIViewController {
-
+class CombustibleViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        imagePicker.delegate = self
+        imagePicker2.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var imagePicker = UIImagePickerController()
+    var imagePicker2 = UIImagePickerController()
+    @IBOutlet weak var facturaTextField: UITextField!
+    @IBOutlet weak var montoTotalTextField: UITextField!
+    @IBOutlet weak var kmTextField: UITextField!
+    @IBOutlet weak var kmImageButton: UIButton!
+    @IBOutlet weak var facturaImageButton: UIButton!
+    
+    var stateKmImage = false
+    var kmImageSelected: UIImage?
+    var facturaImageSelected: UIImage?
+    var imagenURLkm = ""
+    var imagenURLfactura = ""
+    let dispatchGroup = DispatchGroup()
+    
+    @IBAction func kmFotoTapped(_ sender: Any) {
+        stateKmImage = true
+        imagePicker.sourceType = .savedPhotosAlbum
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
     }
-    */
-
+    @IBAction func facturaFotoTapped(_ sender: Any) {
+        imagePicker2.sourceType = .savedPhotosAlbum
+        imagePicker2.allowsEditing = false
+        present(imagePicker2, animated: true, completion: nil)
+    }
+    
+    @IBAction func enviarTapped(_ sender: Any) {
+        if facturaTextField.text! != "" && montoTotalTextField.text! != "" && kmTextField.text! != "" && facturaImageSelected != nil && kmImageSelected != nil{
+            
+            let dispatchGroup = DispatchGroup()
+            uploadImagesToStorage("km", kmImageSelected!, dispatchGroup) { imageURLkm in
+                self.uploadImagesToStorage("factura", self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
+                    self.uploadDataToDatabase(imageURLkm, imageURLfactura)
+                }
+            }
+        } else {
+            self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if stateKmImage == true {
+            let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+            imagePicker.dismiss(animated: true, completion: nil)
+            kmImageSelected = image
+            kmImageButton.setTitle("Seleccionada", for: .normal)
+            stateKmImage = false
+        } else {
+            let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+            imagePicker2.dismiss(animated: true, completion: nil)
+            facturaImageSelected = image
+            facturaImageButton.setTitle("Seleccionada", for: .normal)
+        }
+    }
+    
+    func mostrarAlerta (titulo: String, mensaje: String, accion: String){
+            let alerta = UIAlertController(title: titulo, message: mensaje,
+                                           preferredStyle: .alert )
+            let btnCANCELOK = UIAlertAction(title: accion, style: .default, handler: nil)
+            alerta.addAction(btnCANCELOK)
+            present(alerta,  animated: true, completion: nil)
+        }
+    
+    func mostrarAlertaEnvio (titulo: String, mensaje: String, accion: String){
+            let alerta = UIAlertController(title: titulo, message: mensaje,
+                                           preferredStyle: .alert )
+            let btnCANCELOK = UIAlertAction(title: accion, style: .default, handler: nil)
+            alerta.addAction(btnCANCELOK)
+            present(alerta,  animated: true, completion: nil)
+        }
+    
+    func uploadImagesToStorage(_ child: String, _ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("combustible").child(child).child("\(NSUUID().uuidString).jpg")
+        let imagenData = imagen.jpegData(compressionQuality: 0.5)
+        
+        dispatchGroup.enter()
+        imagenesFolder.putData(imagenData!, metadata: nil) { (metadata, error) in
+            if let error = error {
+                self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
+                print("Ocurrió un error al subir imagen: \(error)")
+                completion(nil)
+            } else {
+                imagenesFolder.downloadURL(completion: { (url, error) in
+                    if let url = url {
+                        let imageURL = url.absoluteString
+                        print("URL de la imagen subida: \(imageURL)")
+                        completion(imageURL)
+                    } else if let error = error{
+                        print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
+                        self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
+                        completion(nil)
+                    }
+                })
+            }
+            
+            dispatchGroup.leave()
+        }
+    }
+    
+    func uploadDataToDatabase(_ imageURLkm: String?, _ imageURLfactura: String?) {
+        let dataFuel: [String: Any] = [
+            "factura": self.facturaTextField.text!,
+            "monto": self.montoTotalTextField.text!,
+            "km": self.kmTextField.text!,
+            "urlkm": imageURLkm ?? "",
+            "urlfactura": imageURLfactura ?? ""
+        ]
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").childByAutoId()
+        ref.setValue(dataFuel) { (error, _) in
+            if let error = error {
+                print("Ocurrió un error al registrar el gasto de combustible: \(error)")
+                self.mostrarAlerta(titulo: "Error", mensaje: "No se pudo registrar el gasto de combustible. Verifique", accion: "Aceptar")
+            } else {
+                print("Registro de gasto de combustible exitoso")
+                let alerta = UIAlertController(title: "Registro exitoso", message: "Registro de gasto combustible de forma exitosa", preferredStyle: .alert)
+                let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: {(UIAlertAction) in
+                    self.resetOriginalValues()
+                })
+                alerta.addAction(btnOK)
+                self.present(alerta, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func resetOriginalValues () {
+        self.facturaTextField.text = ""
+        self.montoTotalTextField.text = ""
+        self.kmTextField.text = ""
+        self.kmImageSelected = nil
+        self.facturaImageSelected = nil
+        self.imagenURLkm = ""
+        self.imagenURLfactura = ""
+        self.kmImageButton.setTitle("Tomar Foto", for: .normal)
+        self.facturaImageButton.setTitle("Tomar Foto", for: .normal)
+    }
 }
