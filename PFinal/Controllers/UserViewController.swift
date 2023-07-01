@@ -21,14 +21,14 @@ class UserViewController: UIViewController {
     
     @IBAction func btnSingOutTapped(_ sender: Any) {
         do {
-                    try Auth.auth().signOut()
-                    
-                    if let keyWindow = UIApplication.shared.keyWindow {
-                        keyWindow.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-                    }
-                } catch let error {
-                    print("Error al cerrar sesión: \(error.localizedDescription)")
-                }
+            try Auth.auth().signOut()
+            
+            if let keyWindow = UIApplication.shared.keyWindow {
+                keyWindow.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            }
+        } catch let error {
+            print("Error al cerrar sesión: \(error.localizedDescription)")
+        }
     }
     
     override func viewDidLoad() {
