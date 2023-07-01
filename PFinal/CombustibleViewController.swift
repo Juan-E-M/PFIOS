@@ -46,73 +46,73 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func enviarTapped(_ sender: Any) {
         if facturaTextField.text! != "" && montoTotalTextField.text! != "" && kmTextField.text! != "" && facturaImageSelected != nil && kmImageSelected != nil{
-//            enviardatos(facturaTextField.text! ,montoTotalTextField.text!,kmTextField.text!, facturaImageSelected!,kmImageSelected!)
+            enviardatos(facturaTextField.text! ,montoTotalTextField.text!,kmTextField.text!, kmImageSelected!,facturaImageSelected!)
             
-            //imagen km
-            let imagenesKmFolder = Storage.storage().reference().child("imagenes").child("combustible").child("km")
-            let imagenKmData =  kmImageSelected?.jpegData(compressionQuality: 0.5)
-            let cargarKmImagen = imagenesKmFolder.child("\(NSUUID().uuidString).jpg")
-            
-            //imagen factura
-            let imagenesFacturaFolder = Storage.storage().reference().child("imagenes").child("combustible").child("factura")
-            let imagenFacturaData =  facturaImageSelected?.jpegData(compressionQuality: 0.5)
-            let cargarFacturaImagen = imagenesFacturaFolder.child("\(NSUUID().uuidString).jpg")
-            
-            // Cargar imagen
-            let dispatchGroup = DispatchGroup()
-            
-            dispatchGroup.enter()
-            cargarKmImagen.putData(imagenKmData!, metadata: nil) { (metadata, error) in
-                if let error = error {
-                    print("Ocurrió un error al subir imagen: \(error)")
-                    self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
-                } else {
-                    cargarKmImagen.downloadURL(completion: { (url, error) in
-                        if let url = url {
-                            self.imagenURLkm = url.absoluteString
-                        } else {
-                            print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
-                            self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
-                        }
-                        dispatchGroup.leave()
-                    })
-                }
-            }
-            // Cargar imagen factura
-            dispatchGroup.enter()
-            cargarFacturaImagen.putData(imagenFacturaData!, metadata: nil) { (metadata, error) in
-                if let error = error {
-                    print("Ocurrió un error al subir imagen: \(error)")
-                    self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
-                } else {
-                    cargarFacturaImagen.downloadURL(completion: { (url, error) in
-                        if let url = url {
-                            self.imagenURLfactura = url.absoluteString
-                        } else {
-                            print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
-                            self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
-                        }
-                        dispatchGroup.leave()
-                    })
-                }
-            }
-            
-            
-            
-            // Esperando a que ambas promises se completen
-            dispatchGroup.notify(queue: .main) {
-                let datafuel = [
-                    "factura": self.facturaTextField.text!,
-                    "monto": self.montoTotalTextField.text!,
-                    "km": self.kmTextField.text!,
-                    "urlkm": self.imagenURLkm,
-                    "urlfactura": self.imagenURLfactura
-                ]
-                dispatchGroup.notify(queue: .main) {
-                    Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").childByAutoId().setValue(datafuel)
-                }
-            }
-    
+//            //imagen km
+//            let imagenesKmFolder = Storage.storage().reference().child("imagenes").child("combustible").child("km")
+//            let imagenKmData =  kmImageSelected?.jpegData(compressionQuality: 0.5)
+//            let cargarKmImagen = imagenesKmFolder.child("\(NSUUID().uuidString).jpg")
+//
+//            //imagen factura
+//            let imagenesFacturaFolder = Storage.storage().reference().child("imagenes").child("combustible").child("factura")
+//            let imagenFacturaData =  facturaImageSelected?.jpegData(compressionQuality: 0.5)
+//            let cargarFacturaImagen = imagenesFacturaFolder.child("\(NSUUID().uuidString).jpg")
+//
+//            // Cargar imagen
+//            let dispatchGroup = DispatchGroup()
+//
+//            dispatchGroup.enter()
+//            cargarKmImagen.putData(imagenKmData!, metadata: nil) { (metadata, error) in
+//                if let error = error {
+//                    print("Ocurrió un error al subir imagen: \(error)")
+//                    self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
+//                } else {
+//                    cargarKmImagen.downloadURL(completion: { (url, error) in
+//                        if let url = url {
+//                            self.imagenURLkm = url.absoluteString
+//                        } else {
+//                            print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
+//                            self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
+//                        }
+//                        dispatchGroup.leave()
+//                    })
+//                }
+//            }
+//            // Cargar imagen factura
+//            dispatchGroup.enter()
+//            cargarFacturaImagen.putData(imagenFacturaData!, metadata: nil) { (metadata, error) in
+//                if let error = error {
+//                    print("Ocurrió un error al subir imagen: \(error)")
+//                    self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
+//                } else {
+//                    cargarFacturaImagen.downloadURL(completion: { (url, error) in
+//                        if let url = url {
+//                            self.imagenURLfactura = url.absoluteString
+//                        } else {
+//                            print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
+//                            self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
+//                        }
+//                        dispatchGroup.leave()
+//                    })
+//                }
+//            }
+//
+//
+//
+//            // Esperando a que ambas promises se completen
+//            dispatchGroup.notify(queue: .main) {
+//                let datafuel = [
+//                    "factura": self.facturaTextField.text!,
+//                    "monto": self.montoTotalTextField.text!,
+//                    "km": self.kmTextField.text!,
+//                    "urlkm": self.imagenURLkm,
+//                    "urlfactura": self.imagenURLfactura
+//                ]
+//                dispatchGroup.notify(queue: .main) {
+//                    Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").childByAutoId().setValue(datafuel)
+//                }
+//            }
+//
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
         }
@@ -138,18 +138,16 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
     
     func enviardatos(_ factura:String,_ monto:String,_ km:String ,_ imagenkm:UIImage,_ imagenfactura:UIImage){
         
-        
-        
         stateKmImage = true
         subirimagenes("km",imagenkm)
         stateKmImage = false
         subirimagenes("factura",imagenfactura)
-        var datefueld = [
+        let datefueld = [
             "factura": factura,
             "monto": monto,
             "km": km,
             "urlkm": imagenURLkm,
-            "urlfactura": imagenURLfactura
+            "urlfactura": imagenURLfactura,
         ]
         dispatchGroup.notify(queue: .main) {
             Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").childByAutoId().setValue(datefueld)
@@ -177,10 +175,11 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
     
     
     func subirimagenes (_ child:String,_ imagen:UIImage){
-        dispatchGroup.enter()
-        let imagenesFolder = Storage.storage().reference().child("imagenes").child("combustible").child(child)
+        
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("combustible").child(child).child("\(NSUUID().uuidString).jpg")
         let imagenData =  imagen.jpegData(compressionQuality: 0.5)
-        let cargarImagen = imagenesFolder.child("\(NSUUID().uuidString).jpg").putData(imagenData!, metadata: nil) { (metadata, error) in
+        dispatchGroup.enter()
+        let cargarImagen = imagenesFolder.putData(imagenData!, metadata: nil) { (metadata, error) in
             if error != nil {
                 self.mostrarAlerta(titulo: "Error", mensaje: "Se produj un error al subir la imagen. Verifique ", accion: "Aceptar")
                 
@@ -196,7 +195,7 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
                             self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
                             
                         }
-                        
+                        self.dispatchGroup.leave()
                     })
                 } else {
                     imagenesFolder.downloadURL(completion: { (url, error) in
@@ -208,13 +207,13 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
                             self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen22", accion: "Cancelar")
                             
                         }
-
+                        self.dispatchGroup.leave()
                     })
                 }
                 
             }
         }
-        self.dispatchGroup.leave()
+        
     }
     /*
     // MARK: - Navigation
