@@ -45,7 +45,7 @@ class TrasladoViewController: UIViewController {
     @IBAction func recordTapped(_ sender: Any) {
         if grabarAudio!.isRecording {
             grabarAudio?.stop()
-            recordButton.setTitle("Grabar Audio", for: .normal)
+            recordButton.setTitle("Grabar", for: .normal)
             playButton.isEnabled = true
         }else{
             grabarAudio?.record()
