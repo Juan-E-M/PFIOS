@@ -15,7 +15,12 @@ class OtrosViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    
+    @IBOutlet weak var TextDocument: UITextField!
+    
+    @IBOutlet weak var TextMonto: UITextField!
+    @IBAction func BtnGrabarDescription(_ sender: Any) {
+    }
     /*
     // MARK: - Navigation
 
