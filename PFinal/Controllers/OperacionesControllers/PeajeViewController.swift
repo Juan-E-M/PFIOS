@@ -66,7 +66,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             let btnCANCELOK = UIAlertAction(title: accion, style: .default, handler: nil)
             alerta.addAction(btnCANCELOK)
             present(alerta,  animated: true, completion: nil)
-        }
+    }
     
     func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
         let imagenesFolder = Storage.storage().reference().child("imagenes").child("peajes").child("\(NSUUID().uuidString).jpg")
@@ -102,7 +102,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             "monto": self.TextMonto.text!,
             "urlfactura": imageURLfactura ?? ""
         ]
-        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Peaje").childByAutoId()
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("peajes").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de peaje: \(error)")

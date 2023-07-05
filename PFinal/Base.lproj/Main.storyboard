@@ -1067,6 +1067,9 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Enviar"/>
+                                        <connections>
+                                            <action selector="EnviarOtros:" destination="OhX-L7-gKB" eventType="touchUpInside" id="5OA-1h-iob"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2Dn-qP-peY">
                                         <rect key="frame" x="69.5" y="166" width="275" height="34"/>
@@ -1177,6 +1180,9 @@
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Tomar Foto"/>
+                                                <connections>
+                                                    <action selector="BtnImagesOtros:" destination="OhX-L7-gKB" eventType="touchUpInside" id="6mP-Zv-I2m"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -1233,8 +1239,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="gh0-aZ-Ebh"/>
                     <connections>
+                        <outlet property="BtnImages" destination="cKU-zR-tt9" id="NGK-Wy-yM5"/>
                         <outlet property="TextDocument" destination="zpB-wp-H2d" id="y1e-di-ccp"/>
                         <outlet property="TextMonto" destination="LpX-ZM-dmO" id="QAh-ed-Ncl"/>
+                        <outlet property="pickerViewAutorizacion" destination="ZOK-zz-3PI" id="SQL-Z7-C0d"/>
+                        <outlet property="pickerViewDoc" destination="cge-a1-LOi" id="Y5i-IJ-anl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdG-Mu-XqX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
