@@ -16,6 +16,10 @@
 		AB6DFCFB2A55B5F600F1E0B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB6DFCFA2A55B5F600F1E0B7 /* GoogleService-Info.plist */; };
 		B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E97762A478C3B00DB305F /* UserViewController.swift */; };
 		B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */; };
+		B9B8B1562A55C138000B109F /* SaldoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B1552A55C138000B109F /* SaldoViewController.swift */; };
+		B9B8B1592A55DFF8000B109F /* Combustible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B1582A55DFF8000B109F /* Combustible.swift */; };
+		B9B8B15B2A55E06D000B109F /* Peaje.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B15A2A55E06D000B109F /* Peaje.swift */; };
+		B9B8B15D2A55E09A000B109F /* Otro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B15C2A55E09A000B109F /* Otro.swift */; };
 		B9B959172A35042D002A22FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B959162A35042D002A22FE /* AppDelegate.swift */; };
 		B9B959192A35042D002A22FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B959182A35042D002A22FE /* SceneDelegate.swift */; };
 		B9B9591B2A35042D002A22FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B9591A2A35042D002A22FE /* ViewController.swift */; };
@@ -37,6 +41,10 @@
 		AB6DFCFA2A55B5F600F1E0B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../PFIOS/PFinal/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B98E97762A478C3B00DB305F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		B9B8B1552A55C138000B109F /* SaldoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaldoViewController.swift; sourceTree = "<group>"; };
+		B9B8B1582A55DFF8000B109F /* Combustible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combustible.swift; sourceTree = "<group>"; };
+		B9B8B15A2A55E06D000B109F /* Peaje.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peaje.swift; sourceTree = "<group>"; };
+		B9B8B15C2A55E09A000B109F /* Otro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Otro.swift; sourceTree = "<group>"; };
 		B9B959132A35042D002A22FE /* PFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B959162A35042D002A22FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9B959182A35042D002A22FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,8 +105,19 @@
 				B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */,
 				B98E97762A478C3B00DB305F /* UserViewController.swift */,
 				AB10D9F02A47677C00DC4134 /* OperacionesViewController.swift */,
+				B9B8B1552A55C138000B109F /* SaldoViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B9B8B1572A55DF6A000B109F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B9B8B1582A55DFF8000B109F /* Combustible.swift */,
+				B9B8B15A2A55E06D000B109F /* Peaje.swift */,
+				B9B8B15C2A55E09A000B109F /* Otro.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B9B9590A2A35042D002A22FE = {
@@ -122,6 +141,7 @@
 		B9B959152A35042D002A22FE /* PFinal */ = {
 			isa = PBXGroup;
 			children = (
+				B9B8B1572A55DF6A000B109F /* Models */,
 				B9B328D92A3E15D9000AAC91 /* Controllers */,
 				B9B959312A351E6A002A22FE /* PFinal.entitlements */,
 				B9B959162A35042D002A22FE /* AppDelegate.swift */,
@@ -258,7 +278,11 @@
 				B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */,
 				B9B959212A35042D002A22FE /* PFinal.xcdatamodeld in Sources */,
 				AB10D9F12A47677C00DC4134 /* OperacionesViewController.swift in Sources */,
+				B9B8B1592A55DFF8000B109F /* Combustible.swift in Sources */,
+				B9B8B1562A55C138000B109F /* SaldoViewController.swift in Sources */,
+				B9B8B15D2A55E09A000B109F /* Otro.swift in Sources */,
 				AB10D9F72A4767C600DC4134 /* PeajeViewController.swift in Sources */,
+				B9B8B15B2A55E06D000B109F /* Peaje.swift in Sources */,
 				AB10D9F92A4767E300DC4134 /* TrasladoViewController.swift in Sources */,
 				B9B959172A35042D002A22FE /* AppDelegate.swift in Sources */,
 				AB10D9F32A47679E00DC4134 /* OtrosViewController.swift in Sources */,
