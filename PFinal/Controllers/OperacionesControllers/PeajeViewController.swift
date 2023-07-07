@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 
-class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate, MapViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +22,20 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     var facturaImageSelected : UIImage?
     var imagenURLfactura = ""
     let dispatchGroup = DispatchGroup()
+    var destinationname = ""
+    var destinationlat = ""
+    var destinationlon = ""
     
     @IBOutlet weak var TextFactura: UITextField!
     @IBOutlet weak var TextMonto: UITextField!
     @IBOutlet weak var BtnTextImageFactura: UIButton!
     @IBAction func BtnEnviarPeaje(_ sender: Any) {
+        
+        print(destinationname)
+        print(destinationlat)
+        print(destinationlon)
+        
+        /*
         if TextFactura.text! != "" && TextMonto.text! != "" && facturaImageSelected != nil {
             
             let dispatchGroup = DispatchGroup()
@@ -36,7 +45,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
-        }
+        }*/
     }
     
     @IBAction func BtnImagen(_ sender: Any) {
@@ -129,6 +138,18 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     
     @IBAction func irMapaTapped(_ sender: Any) {
         self.performSegue(withIdentifier: "mapsegue", sender: nil)
+    }
+    func didSelectDestination(destinationName: String, latitude: String, longitude: String) {
+        destinationname = destinationName
+        destinationlat = latitude
+        destinationlon = longitude
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mapsegue" {
+            if let mapViewController = segue.destination as? MapViewController {
+                mapViewController.delegate = self
+            }
+        }
     }
     
 }

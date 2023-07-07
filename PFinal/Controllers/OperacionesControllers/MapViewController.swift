@@ -8,15 +8,22 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+protocol MapViewControllerDelegate: AnyObject {
+    func didSelectDestination(destinationName: String, latitude: String, longitude: String)
+}
+
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    weak var delegate: MapViewControllerDelegate?
     var contActualizaciones:Int = 0
 
     @IBOutlet weak var mapView: MKMapView!
     var ubicacion = CLLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         print("hello")
         ubicacion.delegate = self
+        mapView.delegate = self
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
             mapView.showsUserLocation = true
             ubicacion.startUpdatingLocation()
@@ -28,10 +35,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                     CLLocationCoordinate2D(latitude: -18.006566, longitude: -70.245653), // Tacna
                     CLLocationCoordinate2D(latitude: -16.621440, longitude: -72.711759)  // Camaná
                 ]
+                let destinationNames = [
+                        "Puno",
+                        "Chivay",
+                        "Moquegua",
+                        "Tacna",
+                        "Camaná"
+                    ]
                 
-                for location in locations {
+                for (index ,location) in locations.enumerated() {
                     let pin = MKPointAnnotation()
                     pin.coordinate = location
+                    pin.title = destinationNames[index]
                     self.mapView.addAnnotation(pin)
                 }
             }
@@ -58,5 +73,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             contActualizaciones += 1
         }
     }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            if let annotation = view.annotation as? MKPointAnnotation {
+                if let title = annotation.title, let coordinate = annotation.coordinate as? CLLocationCoordinate2D {
+                    delegate?.didSelectDestination(destinationName: title ?? "", latitude: "\(coordinate.latitude)", longitude: "\(coordinate.longitude)")
+                    navigationController?.popViewController(animated: true)
+                    }
+            }
+        }
     
 }
