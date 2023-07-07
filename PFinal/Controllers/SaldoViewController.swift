@@ -125,28 +125,29 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
-                if indexPath.section == 0{
-                    let alerta = UIAlertController(title: "Confirmación de eliminación", message: "¿Desea eliminar el registro?", preferredStyle: .alert)
-                    let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler:     {_ in
-                        
-                        switch indexPath.section {
-                        case 0:
-                            let combustible = self.registrosCombustibles[indexPath.row]
-                            self.eliminarRegistroCombustible(combustible)
-                        case 1:
-                            let peaje = self.registrosPeajes[indexPath.row]
-                            self.eliminarRegistroPeajes(peaje)
-                        case 2:
-                            let otros = self.registrosOtros[indexPath.row]
-                            self.eliminarRegistroOtros(otros)
-                        default:
-                            return
-                        }});
-                    alerta.addAction(btnOK)
-                    let btnCANCEL = UIAlertAction(title: "Cancelar", style: .default, handler: nil);
-                    alerta.addAction(btnCANCEL)
-                    present(alerta, animated: true, completion: nil)
-                }
+                
+                let alerta = UIAlertController(title: "Confirmación de eliminación", message: "¿Desea eliminar el registro?", preferredStyle: .alert)
+                let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler:{_ in
+                    switch indexPath.section {
+                    case 0:
+                        let combustible = self.registrosCombustibles[indexPath.row]
+                        self.eliminarRegistroCombustible(combustible)
+                    case 1:
+                        let peaje = self.registrosPeajes[indexPath.row]
+                        self.eliminarRegistroPeajes(peaje)
+                    case 2:
+                        let otros = self.registrosOtros[indexPath.row]
+                        self.eliminarRegistroOtros(otros)
+                    default:
+                        return
+                    }
+                    
+                });
+                alerta.addAction(btnOK)
+                let btnCANCEL = UIAlertAction(title: "Cancelar", style: .default, handler: nil);
+                alerta.addAction(btnCANCEL)
+                present(alerta, animated: true, completion: nil)
+                
                 
             }
         }

@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 
-class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate, MapViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +22,20 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     var facturaImageSelected : UIImage?
     var imagenURLfactura = ""
     let dispatchGroup = DispatchGroup()
+    var destinationname = ""
+    var destinationlat = ""
+    var destinationlon = ""
     
     @IBOutlet weak var TextFactura: UITextField!
     @IBOutlet weak var TextMonto: UITextField!
     @IBOutlet weak var BtnTextImageFactura: UIButton!
     @IBAction func BtnEnviarPeaje(_ sender: Any) {
+        
+        print(destinationname)
+        print(destinationlat)
+        print(destinationlon)
+        
+        /*
         if TextFactura.text! != "" && TextMonto.text! != "" && facturaImageSelected != nil {
             
             let dispatchGroup = DispatchGroup()
@@ -36,7 +45,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
-        }
+        }*/
     }
     
     @IBAction func BtnImagen(_ sender: Any) {
@@ -66,7 +75,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             let btnCANCELOK = UIAlertAction(title: accion, style: .default, handler: nil)
             alerta.addAction(btnCANCELOK)
             present(alerta,  animated: true, completion: nil)
-        }
+    }
     
     func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
         let imagenesFolder = Storage.storage().reference().child("imagenes").child("peajes").child("\(NSUUID().uuidString).jpg")
@@ -102,7 +111,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             "monto": self.TextMonto.text!,
             "urlfactura": imageURLfactura ?? ""
         ]
-        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Peaje").childByAutoId()
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("peajes").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de peaje: \(error)")
@@ -126,14 +135,21 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         self.imagenURLfactura = ""
         self.BtnTextImageFactura.setTitle("Tomar Foto", for: .normal)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func irMapaTapped(_ sender: Any) {
+        self.performSegue(withIdentifier: "mapsegue", sender: nil)
     }
-    */
-
+    func didSelectDestination(destinationName: String, latitude: String, longitude: String) {
+        destinationname = destinationName
+        destinationlat = latitude
+        destinationlon = longitude
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mapsegue" {
+            if let mapViewController = segue.destination as? MapViewController {
+                mapViewController.delegate = self
+            }
+        }
+    }
+    
 }
