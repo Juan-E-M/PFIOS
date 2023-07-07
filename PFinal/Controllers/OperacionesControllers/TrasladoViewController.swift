@@ -118,7 +118,7 @@ class TrasladoViewController: UIViewController {
             "nro": self.nroTextField.text!,
             "urlComentario": audioURL ?? "",
         ]
-        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("traslado").childByAutoId()
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Traslado").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de traslado: \(error)")
