@@ -14,6 +14,8 @@
 		AB10D9F72A4767C600DC4134 /* PeajeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */; };
 		AB10D9F92A4767E300DC4134 /* TrasladoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */; };
 		AB6DFCFB2A55B5F600F1E0B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB6DFCFA2A55B5F600F1E0B7 /* GoogleService-Info.plist */; };
+		ABF7B79A2A5884DB0021754B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF7B7992A5884DB0021754B /* MapViewController.swift */; };
+		ABF7B79E2A58A5FC0021754B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF7B79B2A5885450021754B /* MapKit.framework */; };
 		B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E97762A478C3B00DB305F /* UserViewController.swift */; };
 		B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */; };
 		B9B8B1562A55C138000B109F /* SaldoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B1552A55C138000B109F /* SaldoViewController.swift */; };
@@ -39,6 +41,8 @@
 		AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeajeViewController.swift; sourceTree = "<group>"; };
 		AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrasladoViewController.swift; sourceTree = "<group>"; };
 		AB6DFCFA2A55B5F600F1E0B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../PFIOS/PFinal/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ABF7B7992A5884DB0021754B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		ABF7B79B2A5885450021754B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B98E97762A478C3B00DB305F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B9B8B1552A55C138000B109F /* SaldoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaldoViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF7B79E2A58A5FC0021754B /* MapKit.framework in Frameworks */,
 				4FD076399DFE143DBE17D69E /* Pods_PFinal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,6 +86,7 @@
 		84DDE3D0A17571B90A3B6B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABF7B79B2A5885450021754B /* MapKit.framework */,
 				8C3AA604CF94A65770DFBA05 /* Pods_PFinal.framework */,
 			);
 			name = Frameworks;
@@ -93,6 +99,7 @@
 				AB10D9F22A47679E00DC4134 /* OtrosViewController.swift */,
 				AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */,
 				AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */,
+				ABF7B7992A5884DB0021754B /* MapViewController.swift */,
 			);
 			path = OperacionesControllers;
 			sourceTree = "<group>";
@@ -287,6 +294,7 @@
 				B9B959172A35042D002A22FE /* AppDelegate.swift in Sources */,
 				AB10D9F32A47679E00DC4134 /* OtrosViewController.swift in Sources */,
 				B9B959192A35042D002A22FE /* SceneDelegate.swift in Sources */,
+				ABF7B79A2A5884DB0021754B /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

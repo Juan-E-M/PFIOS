@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1004,7 +1004,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Ir a Mapa"/>
                                         <connections>
-                                            <segue destination="kBv-jC-YuA" kind="show" id="reS-3w-3Wb"/>
+                                            <action selector="irMapaTapped:" destination="Ykf-Gg-gTU" eventType="touchUpInside" id="Era-mi-qcS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1045,16 +1045,17 @@
                         <outlet property="BtnTextImageFactura" destination="meo-Bn-JH3" id="iMk-Ic-DWh"/>
                         <outlet property="TextFactura" destination="d7k-oP-5tz" id="e5C-my-gmq"/>
                         <outlet property="TextMonto" destination="Yxh-oI-Vei" id="cbe-ar-UOI"/>
+                        <segue destination="kBv-jC-YuA" kind="show" identifier="mapsegue" id="hWU-QL-0SS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbu-zc-07N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3528.985507246377" y="556.47321428571422"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="mmT-Sh-gO3">
             <objects>
-                <viewController id="kBv-jC-YuA" sceneMemberID="viewController">
+                <viewController id="kBv-jC-YuA" customClass="MapViewController" customModule="PFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pzk-wj-eS5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1063,6 +1064,18 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="803"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75J-KA-6BI">
+                                <rect key="frame" x="10" y="64" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="P7w-BH-9dX"/>
+                                    <constraint firstAttribute="height" constant="50" id="QT2-HR-H1F"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="Compass"/>
+                                <connections>
+                                    <action selector="centerTapped:" destination="kBv-jC-YuA" eventType="touchUpInside" id="8YV-u7-aQy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4BG-dR-2He"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1070,10 +1083,15 @@
                             <constraint firstItem="4BG-dR-2He" firstAttribute="bottom" secondItem="5NM-eL-Lte" secondAttribute="bottom" id="HEO-kn-quF"/>
                             <constraint firstItem="5NM-eL-Lte" firstAttribute="leading" secondItem="4BG-dR-2He" secondAttribute="leading" id="W6e-ob-5iE"/>
                             <constraint firstItem="5NM-eL-Lte" firstAttribute="top" secondItem="4BG-dR-2He" secondAttribute="top" id="ZBm-qh-eRM"/>
+                            <constraint firstItem="75J-KA-6BI" firstAttribute="leading" secondItem="4BG-dR-2He" secondAttribute="leading" constant="10" id="aUc-eZ-zzv"/>
+                            <constraint firstItem="75J-KA-6BI" firstAttribute="top" secondItem="4BG-dR-2He" secondAttribute="top" constant="20" id="gkU-ZC-u2i"/>
                             <constraint firstItem="4BG-dR-2He" firstAttribute="trailing" secondItem="5NM-eL-Lte" secondAttribute="trailing" id="jT4-qx-lpN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KBl-Bj-kx0"/>
+                    <connections>
+                        <outlet property="mapView" destination="5NM-eL-Lte" id="G7H-Dd-v0H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fC1-QS-JSj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1499,6 +1517,7 @@
         <segue reference="730-5V-mi6"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="Compass" width="50" height="50"/>
         <image name="ccip_splash" width="720" height="720"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="123"/>
         <image name="gear" catalog="system" width="128" height="122"/>
