@@ -188,7 +188,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             "urlotros": imageURLfactura ?? "",
             "urlDescripcion" : audioURL ?? "",
         ]
-        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("otros").childByAutoId()
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Otros").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de otros: \(error)")
