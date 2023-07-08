@@ -199,26 +199,51 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //Funciones para eliminación de registros
     func eliminarRegistroCombustible(_ comb: Combustible) {
-        Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").child(comb.id).removeValue { (error, _) in
+        let usuarioRef = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!)
+        let combustibleRef = usuarioRef.child("Combustible").child(comb.id)
+        
+        let group = DispatchGroup() // Crear el DispatchGroup
+        
+        group.enter() // Registrar la primera tarea
+        
+        combustibleRef.removeValue { (error, _) in
             if let error = error {
                 print("Error al eliminar el registro de Combustible: \(error)")
-                return
             }
-            Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.urlfactura).jpg").delete { (error) in
-                if let error = error {
-                    print("Error al eliminar la imagen de factura: \(error)")
-                    return
-                }
-                Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.urlkm).jpg").delete { (error) in
-                    if let error = error {
-                        print("Error al eliminar la imagen de km: \(error)")
-                        return
-                    }
-                    self.registrosCombustibles.removeAll { $0.id == comb.id }
-                    self.tableView.reloadData()
-                    self.calcularSaldoTotal()
-                }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        let facturaRef = Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.urlfactura).jpg")
+        let kmRef = Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.urlkm).jpg")
+        
+        group.enter() // Registrar la segunda tarea
+        
+        facturaRef.delete { (error) in
+            if let error = error {
+                print("Error al eliminar la imagen de factura: \(error)")
             }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        group.enter() // Registrar la tercera tarea
+        
+        kmRef.delete { (error) in
+            if let error = error {
+                print("Error al eliminar la imagen de km: \(error)")
+            }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        group.notify(queue: .main) {
+            // Todas las tareas se han completado
+            
+            self.registrosCombustibles.removeAll { $0.id == comb.id }
+            self.tableView.reloadData()
+            self.calcularSubmontoCombustible()
+            self.calcularSaldoTotal()
         }
     }
     func calcularSubmontoCombustible() {
@@ -282,9 +307,9 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case 0:
             performSegue(withIdentifier: "vercombustiblesegue", sender: registrosCombustibles[indexPath.row])
         case 1:
-            print("error")
+            performSegue(withIdentifier: "verpeajesegue", sender: registrosPeajes[indexPath.row])
         case 2:
-            print("error")
+            performSegue(withIdentifier: "verotrosegue", sender: registrosOtros[indexPath.row])
         default:
             print("error")
         }
@@ -293,12 +318,22 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "vercombustiblesegue" {
-                if let combustible = sender as? Combustible {
-                    let siguienteVC = segue.destination as! VerCombustibleViewController
-                    siguienteVC.combustible = combustible
-                }
+            if let combustible = sender as? Combustible {
+                let siguienteVC = segue.destination as! VerCombustibleViewController
+                siguienteVC.combustible = combustible
             }
-       }
+        } else if segue.identifier == "verpeajesegue" {
+            if let peaje = sender as? Peaje {
+                let siguienteVC = segue.destination as! VerPeajeViewController
+                siguienteVC.peaje = peaje
+            }
+        } else if segue.identifier == "verotrosegue" {
+            if let otro = sender as? Otro {
+                let siguienteVC = segue.destination as! VerOtrosViewController
+                siguienteVC.otro = otro
+            }
+        }
+    }
     
     
     
@@ -308,6 +343,9 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.submontoOtros = 0.0
         self.submontoPeajes = 0.0
         self.submontoCombustible = 0.0
+        
+        
+        
         
         Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").observe(.value) { (snapshot) in
             if let combustibleSnapshot = snapshot.value as? [String: Any], !combustibleSnapshot.isEmpty {
@@ -320,7 +358,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                        let urlFactura = combustibleData["urlfactura"] as? String,
                        let urlKm = combustibleData["urlkm"] as? String,
                        let monto = combustibleData["monto"] as? String {
-                        // Crea una instancia de Combustible y asigna los valores
+       
                         let comb = Combustible()
                         comb.factura = factura
                         comb.km = km

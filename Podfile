@@ -10,4 +10,5 @@ target 'PFinal' do
   pod 'GoogleSignIn'
   pod 'FirebaseStorage'
   pod 'FirebaseDatabase'
+  pod 'SDWebImage'
 end
