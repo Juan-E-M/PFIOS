@@ -17,7 +17,9 @@
 		ABF7B79A2A5884DB0021754B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF7B7992A5884DB0021754B /* MapViewController.swift */; };
 		ABF7B79E2A58A5FC0021754B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF7B79B2A5885450021754B /* MapKit.framework */; };
 		B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98E97762A478C3B00DB305F /* UserViewController.swift */; };
+		B9AB8C3A2A58D67A00D305FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9AB8C392A58D67A00D305FA /* GoogleService-Info.plist */; };
 		B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */; };
+		B9B81A012A59CA9D0008310C /* VerCombustibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B81A002A59CA9D0008310C /* VerCombustibleViewController.swift */; };
 		B9B8B1562A55C138000B109F /* SaldoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B1552A55C138000B109F /* SaldoViewController.swift */; };
 		B9B8B1592A55DFF8000B109F /* Combustible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B1582A55DFF8000B109F /* Combustible.swift */; };
 		B9B8B15B2A55E06D000B109F /* Peaje.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8B15A2A55E06D000B109F /* Peaje.swift */; };
@@ -44,7 +46,9 @@
 		ABF7B7992A5884DB0021754B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		ABF7B79B2A5885450021754B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B98E97762A478C3B00DB305F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		B9AB8C392A58D67A00D305FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		B9B81A002A59CA9D0008310C /* VerCombustibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerCombustibleViewController.swift; sourceTree = "<group>"; };
 		B9B8B1552A55C138000B109F /* SaldoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaldoViewController.swift; sourceTree = "<group>"; };
 		B9B8B1582A55DFF8000B109F /* Combustible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combustible.swift; sourceTree = "<group>"; };
 		B9B8B15A2A55E06D000B109F /* Peaje.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peaje.swift; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 		B9B328D92A3E15D9000AAC91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B9B819FF2A59CA7E0008310C /* ReadViewControllers */,
 				B99128A72A50D70600DCB044 /* OperacionesControllers */,
 				B9B9591A2A35042D002A22FE /* ViewController.swift */,
 				B9B328DA2A3E18CA000AAC91 /* RegisterViewController.swift */,
@@ -115,6 +120,14 @@
 				B9B8B1552A55C138000B109F /* SaldoViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B9B819FF2A59CA7E0008310C /* ReadViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B9B81A002A59CA9D0008310C /* VerCombustibleViewController.swift */,
+			);
+			path = ReadViewControllers;
 			sourceTree = "<group>";
 		};
 		B9B8B1572A55DF6A000B109F /* Models */ = {
@@ -156,7 +169,7 @@
 				B9B9591C2A35042D002A22FE /* Main.storyboard */,
 				B9B959222A35042E002A22FE /* Assets.xcassets */,
 				B9B959242A35042E002A22FE /* LaunchScreen.storyboard */,
-				AAA52D9B2A59C059004E6128 /* GoogleService-Info.plist */,
+				B9AB8C392A58D67A00D305FA /* GoogleService-Info.plist */,
 				B9B959272A35042E002A22FE /* Info.plist */,
 				B9B9591F2A35042D002A22FE /* PFinal.xcdatamodeld */,
 			);
@@ -224,7 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9B959262A35042E002A22FE /* LaunchScreen.storyboard in Resources */,
-				AAA52D9C2A59C059004E6128 /* GoogleService-Info.plist in Resources */,
+				B9AB8C3A2A58D67A00D305FA /* GoogleService-Info.plist in Resources */,
 				B9B959232A35042E002A22FE /* Assets.xcassets in Resources */,
 				B9B9591E2A35042D002A22FE /* Main.storyboard in Resources */,
 			);
@@ -282,6 +295,7 @@
 				B9B9591B2A35042D002A22FE /* ViewController.swift in Sources */,
 				B9B328DB2A3E18CA000AAC91 /* RegisterViewController.swift in Sources */,
 				AB10D9F52A4767B100DC4134 /* CombustibleViewController.swift in Sources */,
+				B9B81A012A59CA9D0008310C /* VerCombustibleViewController.swift in Sources */,
 				B98E97772A478C3B00DB305F /* UserViewController.swift in Sources */,
 				B9B959212A35042D002A22FE /* PFinal.xcdatamodeld in Sources */,
 				AB10D9F12A47677C00DC4134 /* OperacionesViewController.swift in Sources */,

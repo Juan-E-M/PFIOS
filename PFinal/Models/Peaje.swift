@@ -8,9 +8,11 @@
 import Foundation
 
 class Peaje{
+    var id = ""
     var factura = ""
     var urlfactura = ""
     var monto = ""
-    var ubicacionlatitud = ""
-    var ubicacionlongitud = ""
+    var destino = ""
+    var destinolatitud = ""
+    var destinolongitud = ""
 }
