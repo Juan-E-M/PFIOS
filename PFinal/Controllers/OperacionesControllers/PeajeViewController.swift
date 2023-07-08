@@ -38,6 +38,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         
         if TextFactura.text! != "" && TextMonto.text! != "" && destinationname != "" && destinationlat != "" && destinationlon != "" && facturaImageSelected != nil {
             
+            
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage( self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
                     self.uploadDataToDatabase( imageURLfactura)
