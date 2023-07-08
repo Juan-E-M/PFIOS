@@ -199,26 +199,51 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //Funciones para eliminación de registros
     func eliminarRegistroCombustible(_ comb: Combustible) {
-        Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").child(comb.id).removeValue { (error, _) in
+        let usuarioRef = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!)
+        let combustibleRef = usuarioRef.child("Combustible").child(comb.id)
+        
+        let group = DispatchGroup() // Crear el DispatchGroup
+        
+        group.enter() // Registrar la primera tarea
+        
+        combustibleRef.removeValue { (error, _) in
             if let error = error {
                 print("Error al eliminar el registro de Combustible: \(error)")
-                return
             }
-            Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.urlfactura).jpg").delete { (error) in
-                if let error = error {
-                    print("Error al eliminar la imagen de factura: \(error)")
-                    return
-                }
-                Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.urlkm).jpg").delete { (error) in
-                    if let error = error {
-                        print("Error al eliminar la imagen de km: \(error)")
-                        return
-                    }
-                    self.registrosCombustibles.removeAll { $0.id == comb.id }
-                    self.tableView.reloadData()
-                    self.calcularSaldoTotal()
-                }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        let facturaRef = Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.urlfactura).jpg")
+        let kmRef = Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.urlkm).jpg")
+        
+        group.enter() // Registrar la segunda tarea
+        
+        facturaRef.delete { (error) in
+            if let error = error {
+                print("Error al eliminar la imagen de factura: \(error)")
             }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        group.enter() // Registrar la tercera tarea
+        
+        kmRef.delete { (error) in
+            if let error = error {
+                print("Error al eliminar la imagen de km: \(error)")
+            }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        
+        group.notify(queue: .main) {
+            // Todas las tareas se han completado
+            
+            self.registrosCombustibles.removeAll { $0.id == comb.id }
+            self.tableView.reloadData()
+            self.calcularSubmontoCombustible()
+            self.calcularSaldoTotal()
         }
     }
     func calcularSubmontoCombustible() {
@@ -318,6 +343,9 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.submontoOtros = 0.0
         self.submontoPeajes = 0.0
         self.submontoCombustible = 0.0
+        
+        
+        
         
         Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").observe(.value) { (snapshot) in
             if let combustibleSnapshot = snapshot.value as? [String: Any], !combustibleSnapshot.isEmpty {

@@ -25,14 +25,20 @@ class TrasladoViewController: UIViewController {
     @IBOutlet weak var nroTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var BtnEnviar: UIButton!
     
     var audioURL = ""
     var audioLocalURL:URL?
     var grabarAudio: AVAudioRecorder?
     var reproducirAudio:AVAudioPlayer?
+    var stateComentario = false
     
     @IBAction func enviarTapped(_ sender: Any) {
-        if siteTextField.text! != "" && nroTextField.text! != "" && audioLocalURL != nil{
+        if siteTextField.text! != "" && nroTextField.text! != "" && stateComentario != false{
+            siteTextField.isEnabled = false
+            nroTextField.isEnabled = false
+            BtnEnviar.isEnabled = false
+            recordButton.isEnabled = false
             uploadAudioToStorage() { audioURL in
                 self.uploadDataToDatabase(audioURL)
             }
@@ -43,6 +49,7 @@ class TrasladoViewController: UIViewController {
     
     
     @IBAction func recordTapped(_ sender: Any) {
+        stateComentario = true
         if grabarAudio!.isRecording {
             grabarAudio?.stop()
             recordButton.setTitle("Grabar", for: .normal)
@@ -123,14 +130,17 @@ class TrasladoViewController: UIViewController {
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de traslado: \(error)")
                 self.mostrarAlerta(titulo: "Error", mensaje: "No se pudo registrar el gasto de traslado. Verifique", accion: "Aceptar")
+                self.Habilitar()
             } else {
                 print("Registro de gasto de traslado exitoso")
                 let alerta = UIAlertController(title: "Registro exitoso", message: "Registro de gasto traslado de forma exitosa", preferredStyle: .alert)
+                self.resetOriginalValues()
                 let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: {(UIAlertAction) in
-                    self.resetOriginalValues()
+                    self.Habilitar()
                 })
                 alerta.addAction(btnOK)
                 self.present(alerta, animated: true, completion: nil)
+                
             }
         }
     }
@@ -155,6 +165,14 @@ class TrasladoViewController: UIViewController {
         self.siteTextField.text = ""
         self.nroTextField.text = ""
         self.audioURL = ""
+        self.stateComentario = false
+    }
+    
+    func Habilitar() {
+        siteTextField.isEnabled = true
+        nroTextField.isEnabled = true
+        BtnEnviar.isEnabled = true
+        recordButton.isEnabled = true
     }
 
 }
