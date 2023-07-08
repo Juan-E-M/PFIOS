@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4FD076399DFE143DBE17D69E /* Pods_PFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3AA604CF94A65770DFBA05 /* Pods_PFinal.framework */; };
+		AAA52DA02A59DE18004E6128 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAA52D9F2A59DE18004E6128 /* GoogleService-Info.plist */; };
 		AB10D9F12A47677C00DC4134 /* OperacionesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F02A47677C00DC4134 /* OperacionesViewController.swift */; };
 		AB10D9F32A47679E00DC4134 /* OtrosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F22A47679E00DC4134 /* OtrosViewController.swift */; };
 		AB10D9F52A4767B100DC4134 /* CombustibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */; };
 		AB10D9F72A4767C600DC4134 /* PeajeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */; };
 		AB10D9F92A4767E300DC4134 /* TrasladoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */; };
-		ABB7B6962A59D7C90097DC97 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABB7B6952A59D7C90097DC97 /* GoogleService-Info.plist */; };
 		ABB7B6982A59D8B60097DC97 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7B6972A59D8B60097DC97 /* SplashViewController.swift */; };
 		ABF7B79A2A5884DB0021754B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF7B7992A5884DB0021754B /* MapViewController.swift */; };
 		ABF7B79E2A58A5FC0021754B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF7B79B2A5885450021754B /* MapKit.framework */; };
@@ -37,12 +37,12 @@
 		347E3C0F634D334F6139354A /* Pods-PFinal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PFinal.debug.xcconfig"; path = "Target Support Files/Pods-PFinal/Pods-PFinal.debug.xcconfig"; sourceTree = "<group>"; };
 		69B6886A1EDC4D8FCE8EA62E /* Pods-PFinal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PFinal.release.xcconfig"; path = "Target Support Files/Pods-PFinal/Pods-PFinal.release.xcconfig"; sourceTree = "<group>"; };
 		8C3AA604CF94A65770DFBA05 /* Pods_PFinal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PFinal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA52D9F2A59DE18004E6128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB10D9F02A47677C00DC4134 /* OperacionesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperacionesViewController.swift; sourceTree = "<group>"; };
 		AB10D9F22A47679E00DC4134 /* OtrosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtrosViewController.swift; sourceTree = "<group>"; };
 		AB10D9F42A4767B100DC4134 /* CombustibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombustibleViewController.swift; sourceTree = "<group>"; };
 		AB10D9F62A4767C600DC4134 /* PeajeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeajeViewController.swift; sourceTree = "<group>"; };
 		AB10D9F82A4767E300DC4134 /* TrasladoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrasladoViewController.swift; sourceTree = "<group>"; };
-		ABB7B6952A59D7C90097DC97 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../PFIOS/PFinal/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABB7B6972A59D8B60097DC97 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		ABF7B7992A5884DB0021754B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		ABF7B79B2A5885450021754B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -168,10 +168,10 @@
 				B9B959162A35042D002A22FE /* AppDelegate.swift */,
 				B9B959182A35042D002A22FE /* SceneDelegate.swift */,
 				B9B9591C2A35042D002A22FE /* Main.storyboard */,
-				ABB7B6952A59D7C90097DC97 /* GoogleService-Info.plist */,
 				B9B959222A35042E002A22FE /* Assets.xcassets */,
 				B9B959242A35042E002A22FE /* LaunchScreen.storyboard */,
 				B9B959272A35042E002A22FE /* Info.plist */,
+				AAA52D9F2A59DE18004E6128 /* GoogleService-Info.plist */,
 				B9B9591F2A35042D002A22FE /* PFinal.xcdatamodeld */,
 			);
 			path = PFinal;
@@ -238,7 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9B959262A35042E002A22FE /* LaunchScreen.storyboard in Resources */,
-				ABB7B6962A59D7C90097DC97 /* GoogleService-Info.plist in Resources */,
+				AAA52DA02A59DE18004E6128 /* GoogleService-Info.plist in Resources */,
 				B9B959232A35042E002A22FE /* Assets.xcassets in Resources */,
 				B9B9591E2A35042D002A22FE /* Main.storyboard in Resources */,
 			);

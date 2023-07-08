@@ -29,20 +29,19 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
     @IBOutlet weak var TextFactura: UITextField!
     @IBOutlet weak var TextMonto: UITextField!
     @IBOutlet weak var BtnTextImageFactura: UIButton!
+    @IBOutlet weak var BtnEnviar: UIButton!
+    @IBOutlet weak var BtnMapa: UIButton!
     @IBAction func BtnEnviarPeaje(_ sender: Any) {
-        
-        print(destinationname)
-        print(destinationlat)
-        print(destinationlon)
-        
-        
         if TextFactura.text! != "" && TextMonto.text! != "" && destinationname != "" && destinationlat != "" && destinationlon != "" && facturaImageSelected != nil {
-            
+            TextFactura.isEnabled = false
+            TextMonto.isEnabled = false
+            BtnEnviar.isEnabled = false
+            BtnMapa.isEnabled = false
+            BtnTextImageFactura.isEnabled = false
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage( self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
                     self.uploadDataToDatabase( imageURLfactura)
                 }
-            
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
         }
@@ -58,7 +57,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         facturaImageSelected = image
         imagePicker.dismiss(animated: true, completion: nil)
-        BtnTextImageFactura.setTitle("Seleccionada", for: .normal)
+        BtnTextImageFactura.setTitle("Seleccionado", for: .normal)
     }
     
     func mostrarAlertaEnvio (titulo: String, mensaje: String, accion: String){
@@ -119,14 +118,17 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de peaje: \(error)")
                 self.mostrarAlerta(titulo: "Error", mensaje: "No se pudo registrar el gasto de peaje. Verifique", accion: "Aceptar")
+                self.Habilitar()
             } else {
                 print("Registro de gasto de peaje exitoso")
                 let alerta = UIAlertController(title: "Registro exitoso", message: "Registro de gasto peaje de forma exitosa", preferredStyle: .alert)
+                self.resetOriginalValues()
                 let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: {(UIAlertAction) in
-                    self.resetOriginalValues()
+                    self.Habilitar()
                 })
                 alerta.addAction(btnOK)
                 self.present(alerta, animated: true, completion: nil)
+                
             }
         }
     }
@@ -136,7 +138,19 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         self.TextMonto.text = ""
         self.facturaImageSelected = nil
         self.imagenURLfactura = ""
+        self.destinationname = ""
+        self.destinationlat = ""
+        self.destinationlon = ""
         self.BtnTextImageFactura.setTitle("Tomar Foto", for: .normal)
+        self.BtnMapa.setTitle("Ir a Mapa", for: .normal)
+    }
+    
+    func Habilitar() {
+        self.TextFactura.isEnabled = true
+        self.TextMonto.isEnabled = true
+        self.BtnEnviar.isEnabled = true
+        self.BtnMapa.isEnabled = true
+        self.BtnTextImageFactura.isEnabled = true
     }
     
     @IBAction func irMapaTapped(_ sender: Any) {
@@ -146,6 +160,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         destinationname = destinationName
         destinationlat = latitude
         destinationlon = longitude
+        self.BtnMapa.setTitle("Seleccionado", for: .normal)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapsegue" {
