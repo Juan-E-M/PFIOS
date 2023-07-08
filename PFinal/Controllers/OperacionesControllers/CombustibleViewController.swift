@@ -25,7 +25,7 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var kmTextField: UITextField!
     @IBOutlet weak var kmImageButton: UIButton!
     @IBOutlet weak var facturaImageButton: UIButton!
-    
+    @IBOutlet weak var BtnEnviar: UIButton!
     var stateKmImage = false
     var kmImageSelected: UIImage?
     var facturaImageSelected: UIImage?
@@ -47,7 +47,12 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func enviarTapped(_ sender: Any) {
         if facturaTextField.text! != "" && montoTotalTextField.text! != "" && kmTextField.text! != "" && facturaImageSelected != nil && kmImageSelected != nil{
-            
+            facturaTextField.isEnabled = false
+            montoTotalTextField.isEnabled = false
+            kmTextField.isEnabled = false
+            kmImageButton.isEnabled = false
+            facturaImageButton.isEnabled = false
+            BtnEnviar.isEnabled = false
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage("km", kmImageSelected!, dispatchGroup) { imageURLkm in
                 self.uploadImagesToStorage("factura", self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
@@ -65,13 +70,13 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
             let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
             imagePicker.dismiss(animated: true, completion: nil)
             kmImageSelected = image
-            kmImageButton.setTitle("Seleccionada", for: .normal)
+            kmImageButton.setTitle("Seleccionado", for: .normal)
             stateKmImage = false
         } else {
             let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
             imagePicker2.dismiss(animated: true, completion: nil)
             facturaImageSelected = image
-            facturaImageButton.setTitle("Seleccionada", for: .normal)
+            facturaImageButton.setTitle("Seleccionado", for: .normal)
         }
     }
     
@@ -132,11 +137,13 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de combustible: \(error)")
                 self.mostrarAlerta(titulo: "Error", mensaje: "No se pudo registrar el gasto de combustible. Verifique", accion: "Aceptar")
+                self.Habilitar()
             } else {
                 print("Registro de gasto de combustible exitoso")
                 let alerta = UIAlertController(title: "Registro exitoso", message: "Registro de gasto combustible de forma exitosa", preferredStyle: .alert)
+                self.resetOriginalValues()
                 let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: {(UIAlertAction) in
-                    self.resetOriginalValues()
+                    self.Habilitar()
                 })
                 alerta.addAction(btnOK)
                 self.present(alerta, animated: true, completion: nil)
@@ -154,5 +161,14 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
         self.imagenURLfactura = ""
         self.kmImageButton.setTitle("Tomar Foto", for: .normal)
         self.facturaImageButton.setTitle("Tomar Foto", for: .normal)
+    }
+    
+    func Habilitar() {
+        self.facturaTextField.isEnabled = true
+        self.montoTotalTextField.isEnabled = true
+        self.kmTextField.isEnabled = true
+        self.kmImageButton.isEnabled = true
+        self.facturaImageButton.isEnabled = true
+        self.BtnEnviar.isEnabled = true
     }
 }

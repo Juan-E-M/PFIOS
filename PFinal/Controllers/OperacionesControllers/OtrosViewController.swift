@@ -14,18 +14,18 @@ import AVFoundation
 
 class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    let options = ["Dni", "Pasaparte", "C. de Extranjeria"]
+    let options = ["Dni", "Pasaporte", "C. de Extranjeria"]
     let options2 = ["Juan Escobar", "Luis Paucar", "Junior Molina", "Cristofer Rodriguez"]
-    var TextTypeDocument = ""
-    var TextAutorizacion = ""
+    var TextTypeDocument = "DNI"
+    var TextAutorizacion = "Juan Escobar"
     var imagePicker = UIImagePickerController()
     var otrosImageSelected : UIImage?
     var imagenURLOtros = ""
     let dispatchGroup = DispatchGroup()
     var statuspicker = false
-    
+    var statedescripcion = false
     var audioURL = ""
-    var audioLocalURL:URL?
+    var audioLocalURL:URL? = nil
     var grabarAudio: AVAudioRecorder?
     var reproducirAudio:AVAudioPlayer?
     
@@ -96,7 +96,6 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         pickerViewDoc.delegate = self
         pickerViewDoc.dataSource = self
         
-        
         pickerViewAutorizacion.delegate = self
         pickerViewAutorizacion.dataSource = self
         
@@ -113,7 +112,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var pickerViewAutorizacion: UIPickerView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
-    
+    @IBOutlet weak var BtnEnviar: UIButton!
     @IBAction func playTapped(_ sender: Any) {
         do{
             try reproducirAudio = AVAudioPlayer(contentsOf: audioLocalURL!)
@@ -121,7 +120,9 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             print("Reproduciendo")
         } catch {}
     }
+    
     @IBAction func BtnGrabarDescription(_ sender: Any) {
+        statedescripcion = true
         if grabarAudio!.isRecording {
             grabarAudio?.stop()
             recordButton.setTitle("Grabar", for: .normal)
@@ -140,14 +141,19 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     @IBAction func EnviarOtros(_ sender: Any) {
-        if TextDocument.text! != "" && TextMonto.text! != "" && otrosImageSelected != nil && TextTypeDocument != "" && TextAutorizacion != "" && audioLocalURL != nil{
-            
+        if TextDocument.text! != "" && TextMonto.text! != "" && otrosImageSelected != nil && TextTypeDocument != "" && TextAutorizacion != "" && statedescripcion != false{
+            pickerViewDoc.isUserInteractionEnabled = false
+            pickerViewAutorizacion.isUserInteractionEnabled = false
+            TextDocument.isEnabled = false
+            TextMonto.isEnabled = false
+            BtnImages.isEnabled = false
+            BtnEnviar.isEnabled = false
+            recordButton.isEnabled = false
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage( self.otrosImageSelected!, dispatchGroup) { imagenurl in self.uploadAudioToStorage() { audioURL in
                     self.uploadDataToDatabase(imagenurl,audioURL )
                 }
             }
-            
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
         }
@@ -177,7 +183,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func uploadAudioToStorage(completion: @escaping (String?) -> Void) {
-        let audiosFolder = Storage.storage().reference().child("audios").child("traslados")
+        let audiosFolder = Storage.storage().reference().child("audios").child("otros")
         let audioData = try? Data(contentsOf: self.audioLocalURL!)
         let uploadAudio = audiosFolder.child("\(NSUUID().uuidString).m4a")
         
@@ -234,7 +240,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func uploadDataToDatabase(_ imageURLfactura: String?,_ audioURL: String?) {
         let dataFuel: [String: Any] = [
             "tipodocumento": self.TextTypeDocument,
-            "nrodocumento": self.TextDocument.text!,
+            "numerodocumento": self.TextDocument.text!,
             "autorizacion": self.TextAutorizacion,
             "monto": self.TextMonto.text!,
             "urlotros": imageURLfactura ?? "",
@@ -245,11 +251,13 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de otros: \(error)")
                 self.mostrarAlerta(titulo: "Error", mensaje: "No se pudo registrar el gasto de otros. Verifique", accion: "Aceptar")
+                self.Habilitar()
             } else {
                 print("Registro de gasto de otros exitoso")
                 let alerta = UIAlertController(title: "Registro exitoso", message: "Registro de gasto otros de forma exitosa", preferredStyle: .alert)
+                self.resetOriginalValues()
                 let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler: {(UIAlertAction) in
-                    self.resetOriginalValues()
+                    self.Habilitar()
                 })
                 alerta.addAction(btnOK)
                 self.present(alerta, animated: true, completion: nil)
@@ -285,7 +293,18 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.TextMonto.text = ""
         self.otrosImageSelected = nil
         self.imagenURLOtros = ""
+        self.statedescripcion = false
         self.BtnImages.setTitle("Tomar Foto", for: .normal)
+    }
+    
+    func Habilitar () {
+        self.pickerViewDoc.isUserInteractionEnabled = true
+        self.pickerViewAutorizacion.isUserInteractionEnabled = true
+        self.TextDocument.isEnabled = true
+        self.TextMonto.isEnabled = true
+        self.BtnImages.isEnabled = true
+        self.BtnEnviar.isEnabled = true
+        self.recordButton.isEnabled = true
     }
     /*
     // MARK: - Navigation

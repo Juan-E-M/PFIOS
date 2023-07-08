@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rzn-pv-dXc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="I5v-xv-EWN">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -560,6 +560,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="5oh-4V-usn"/>
                     <connections>
+                        <outlet property="BtnEnviar" destination="5kY-40-Uzk" id="tUY-XJ-1wt"/>
                         <outlet property="facturaImageButton" destination="CoA-gf-Bb0" id="Fx6-7M-NOL"/>
                         <outlet property="facturaTextField" destination="S9r-pB-02R" id="s8V-Cd-HcQ"/>
                         <outlet property="kmImageButton" destination="iC1-eq-ibM" id="fLd-IL-2T3"/>
@@ -1044,6 +1045,8 @@
                         <barButtonItem key="backBarButtonItem" title="Peaje" id="H6d-AO-LQS"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="BtnEnviar" destination="LWm-ry-2GF" id="rSa-eB-29K"/>
+                        <outlet property="BtnMapa" destination="GRX-rW-Czj" id="WHg-Va-sba"/>
                         <outlet property="BtnTextImageFactura" destination="meo-Bn-JH3" id="iMk-Ic-DWh"/>
                         <outlet property="TextFactura" destination="d7k-oP-5tz" id="e5C-my-gmq"/>
                         <outlet property="TextMonto" destination="Yxh-oI-Vei" id="cbe-ar-UOI"/>
@@ -1413,6 +1416,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="gh0-aZ-Ebh"/>
                     <connections>
+                        <outlet property="BtnEnviar" destination="oRt-2a-ufW" id="Tzc-0R-EZn"/>
                         <outlet property="BtnImages" destination="cKU-zR-tt9" id="NGK-Wy-yM5"/>
                         <outlet property="TextDocument" destination="zpB-wp-H2d" id="y1e-di-ccp"/>
                         <outlet property="TextMonto" destination="LpX-ZM-dmO" id="QAh-ed-Ncl"/>
@@ -1566,6 +1570,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="8UP-E6-RFo"/>
                     <connections>
+                        <outlet property="BtnEnviar" destination="5kk-5y-ine" id="o05-Iw-fvX"/>
                         <outlet property="nroTextField" destination="Ntx-hb-3ze" id="Axz-Rn-rC5"/>
                         <outlet property="playButton" destination="6Qu-kB-9kR" id="IU5-40-sJN"/>
                         <outlet property="recordButton" destination="x8f-Aj-xNh" id="TYp-NK-whU"/>
@@ -1616,6 +1621,37 @@
             </objects>
             <point key="canvasLocation" x="1636.2318840579712" y="132.58928571428572"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="AMz-gU-JFm">
+            <objects>
+                <viewController id="I5v-xv-EWN" customClass="SplashViewController" customModule="PFinal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HCp-XN-kxa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_initial" translatesAutoresizingMaskIntoConstraints="NO" id="sh3-Hu-rmJ">
+                                <rect key="frame" x="107" y="353" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="3sA-Px-Jnp"/>
+                                    <constraint firstAttribute="width" constant="200" id="MIa-qK-ce8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="okn-DF-apn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sh3-Hu-rmJ" firstAttribute="centerX" secondItem="okn-DF-apn" secondAttribute="centerX" id="03B-ho-3uJ"/>
+                            <constraint firstItem="sh3-Hu-rmJ" firstAttribute="centerY" secondItem="okn-DF-apn" secondAttribute="centerY" id="Mmh-FV-k2b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="Rzn-pv-dXc" kind="presentation" identifier="splashsegue" modalPresentationStyle="fullScreen" id="FHg-fu-LOQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wTZ-RE-vad" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2190" y="569"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="pad-Sh-LDb">
             <objects>
@@ -1655,7 +1691,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="730-5V-mi6"/>
+        <segue reference="GAt-LI-bzT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Compass" width="50" height="50"/>
@@ -1667,6 +1703,7 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.circle" catalog="system" width="128" height="121"/>
         <image name="pngwing.com (4)" width="25" height="25"/>
+        <image name="splash_initial" width="1417" height="1417"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
