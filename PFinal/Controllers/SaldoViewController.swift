@@ -277,6 +277,30 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            performSegue(withIdentifier: "vercombustiblesegue", sender: registrosCombustibles[indexPath.row])
+        case 1:
+            print("error")
+        case 2:
+            print("error")
+        default:
+            print("error")
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "vercombustiblesegue" {
+                if let combustible = sender as? Combustible {
+                    let siguienteVC = segue.destination as! VerCombustibleViewController
+                    siguienteVC.combustible = combustible
+                }
+            }
+       }
+    
+    
     
     
     //Cargar la data
