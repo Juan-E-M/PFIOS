@@ -150,8 +150,8 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             BtnEnviar.isEnabled = false
             recordButton.isEnabled = false
             let dispatchGroup = DispatchGroup()
-            uploadImagesToStorage( self.otrosImageSelected!, dispatchGroup) { imagenurl in self.uploadAudioToStorage() { audioURL in
-                    self.uploadDataToDatabase(imagenurl,audioURL )
+            uploadImagesToStorage( self.otrosImageSelected!, dispatchGroup) { imagenurl, imagenID in self.uploadAudioToStorage() { audioURL, audioID in
+                    self.uploadDataToDatabase(imagenurl,audioURL, imagenID, audioID )
                 }
             }
         } else {
@@ -182,26 +182,28 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
     }
     
-    func uploadAudioToStorage(completion: @escaping (String?) -> Void) {
+    func uploadAudioToStorage(completion: @escaping (String?, String?) -> Void) {
         let audiosFolder = Storage.storage().reference().child("audios").child("otros")
         let audioData = try? Data(contentsOf: self.audioLocalURL!)
-        let uploadAudio = audiosFolder.child("\(NSUUID().uuidString).m4a")
+        
+        let audioID = NSUUID().uuidString
+        let uploadAudio = audiosFolder.child("\(audioID).m4a")
         
         uploadAudio.putData(audioData!, metadata: nil) { (metadata, error) in
             if let error = error {
                 print("Ocurrió un error al subir el audio: \(error)")
                 self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir el audio. Verifique ", accion: "Aceptar")
-                completion(nil)
+                completion(nil, nil)
             } else {
                 uploadAudio.downloadURL { (url, error) in
                     if let url = url {
                         let audioURL = url.absoluteString
                         print("URL del audio subido: \(self.audioURL)")
-                        completion(audioURL)
+                        completion(audioURL, audioID)
                     } else if let error = error{
                         print("Ocurrió un error al obtener la URL del audio subido: \(error)")
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información del audio", accion: "Cancelar")
-                        completion(nil)
+                        completion(nil, nil)
                     }
                     
                 }
@@ -209,8 +211,9 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
     }
     
-    func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
-        let imagenesFolder = Storage.storage().reference().child("imagenes").child("otros").child("\(NSUUID().uuidString).jpg")
+    func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?, String?) -> Void) {
+        let imagenID = NSUUID().uuidString
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("otros").child("\(imagenID).jpg")
         let imagenData = imagen.jpegData(compressionQuality: 0.5)
         
         dispatchGroup.enter()
@@ -218,17 +221,17 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             if let error = error {
                 self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
                 print("Ocurrió un error al subir imagen: \(error)")
-                completion(nil)
+                completion(nil, nil)
             } else {
                 imagenesFolder.downloadURL(completion: { (url, error) in
                     if let url = url {
                         let imageURL = url.absoluteString
                         print("URL de la imagen subida: \(imageURL)")
-                        completion(imageURL)
+                        completion(imageURL, imagenID)
                     } else if let error = error{
                         print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
-                        completion(nil)
+                        completion(nil, nil)
                     }
                 })
             }
@@ -237,7 +240,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
     }
     
-    func uploadDataToDatabase(_ imageURLfactura: String?,_ audioURL: String?) {
+    func uploadDataToDatabase(_ imageURLfactura: String?,_ audioURL: String?,_ imagenID:String?,_ audioID:String?) {
         let dataFuel: [String: Any] = [
             "tipodocumento": self.TextTypeDocument,
             "numerodocumento": self.TextDocument.text!,
@@ -245,6 +248,8 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             "monto": self.TextMonto.text!,
             "urlotros": imageURLfactura ?? "",
             "urldescripcion" : audioURL ?? "",
+            "idotros": imagenID ?? "",
+            "iddescripcion": audioID ?? ""
         ]
         let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Otros").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in

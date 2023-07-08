@@ -173,7 +173,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     switch indexPath.section {
                     case 0:
                         let combustible = self.registrosCombustibles[indexPath.row]
-                        self.eliminarRegistroCombustible(combustible)
+                        self.eliminarRegistroCombustible(combustible, combustible.urlfactura, combustible.urlkm)
                     case 1:
                         let peaje = self.registrosPeajes[indexPath.row]
                         self.eliminarRegistroPeajes(peaje)
@@ -198,24 +198,18 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     //Funciones para eliminación de registros
-    func eliminarRegistroCombustible(_ comb: Combustible) {
+    func eliminarRegistroCombustible(_ comb: Combustible,_ urlfactura:String,_ urlkm:String ) {
         let usuarioRef = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!)
         let combustibleRef = usuarioRef.child("Combustible").child(comb.id)
         
         let group = DispatchGroup() // Crear el DispatchGroup
         
-        group.enter() // Registrar la primera tarea
+         // Registrar la primera tarea  
         
-        combustibleRef.removeValue { (error, _) in
-            if let error = error {
-                print("Error al eliminar el registro de Combustible: \(error)")
-            }
-            
-            group.leave() // Marcar la tarea como completada
-        }
         
-        let facturaRef = Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.urlfactura).jpg")
-        let kmRef = Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.urlkm).jpg")
+        
+        let facturaRef = Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(urlfactura).jpg")
+        let kmRef = Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(urlkm).jpg")
         
         group.enter() // Registrar la segunda tarea
         
@@ -232,6 +226,14 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         kmRef.delete { (error) in
             if let error = error {
                 print("Error al eliminar la imagen de km: \(error)")
+            }
+            
+            group.leave() // Marcar la tarea como completada
+        }
+        group.enter()
+        combustibleRef.removeValue { (error, _) in
+            if let error = error {
+                print("Error al eliminar el registro de Combustible: \(error)")
             }
             
             group.leave() // Marcar la tarea como completada
@@ -262,8 +264,10 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     print("Error al eliminar la imagen de factura: \(error)")
                     return
                 }
+                
                 self.registrosPeajes.removeAll { $0.id == peaje.id }
                 self.tableView.reloadData()
+                self.calcularSubmontoPeaje()
                 self.calcularSaldoTotal()
                 
             }
@@ -280,18 +284,20 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 print("Error al eliminar el registro de otros: \(error)")
                 return
             }
-            Storage.storage().reference().child("imagenes").child("otros").child("\(otro.urlotros).jpg").delete { (error) in
+            Storage.storage().reference().child("imagenes").child("otros").child("\(otro.idotros).jpg").delete { (error) in
                 if let error = error {
                     print("Error al eliminar la imagen: \(error)")
                     return
                 }
-                Storage.storage().reference().child("audios").child("otros").child("\(otro.urldescripcion).m4a").delete { (error) in
+                Storage.storage().reference().child("audios").child("otros").child("\(otro.iddescripcion).m4a").delete { (error) in
                     if let error = error {
                         print("Error al eliminar audio: \(error)")
                         return
                     }
+                    
                     self.registrosOtros.removeAll { $0.id == otro.id }
                     self.tableView.reloadData()
+                    self.calcularSubmontoOtros()
                     self.calcularSaldoTotal()
                 }
             }
@@ -423,7 +429,9 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                        let numerodocumento = otroData["numerodocumento"] as? String,
                        let urldescripcion = otroData["urldescripcion"] as? String,
                        let urlotros = otroData["urlotros"] as? String,
-                       let monto = otroData["monto"] as? String {
+                       let monto = otroData["monto"] as? String,
+                       let iddescripcion = otroData["iddescripcion"] as? String,
+                       let idotros = otroData["idotros"] as? String{
                         let otro = Otro()
                         otro.tipodocumento = tipodocumento
                         otro.numerodocumento = numerodocumento
@@ -431,6 +439,8 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         otro.urlotros = urlotros
                         otro.id = key
                         otro.monto = monto
+                        otro.idotros = idotros
+                        otro.iddescripcion = iddescripcion
                         
                         submontoTemp += Double(monto) ?? 0.0
                         self.registrosOtros.append(otro)

@@ -15,4 +15,6 @@ class Otro{
     var urldescripcion = ""
     var urlotros = ""
     var monto = ""
+    var iddescripcion = ""
+    var idotros = ""
 }
