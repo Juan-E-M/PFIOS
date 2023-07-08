@@ -14,6 +14,7 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let auth = Auth.auth()
     var userID: String?
     var option = 0
+    var indexcargo = 0
     var options = [ "Trabajador de campo", "Supervisor", "Administrador"]
     var selectedOption = ""
     var cargo = ""
@@ -44,6 +45,7 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             btnSingOut.backgroundColor = UIColor.red
             btnSingOut.setTitleColor(UIColor.white, for: .normal)
             pickerRolUser.isUserInteractionEnabled = false
+            self.datos()
         }
     }
     
@@ -54,14 +56,22 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         txtNameUser.isEnabled = false
         txtEmailUser.isEnabled = false
         pickerRolUser.isUserInteractionEnabled = false
+        selectedOption = options[0]
         //txtRoleUser.isEnabled = false
         self.getuser{ [weak self] user, email, cargo in
             DispatchQueue.main.async {
                 self?.txtNameUser.text = user
                 self?.txtEmailUser.text = email
-                //self?.txtRoleUser.text = cargo
                 self?.pickerRolUser.reloadAllComponents()
-                self?.pickerRolUser.selectRow(1, inComponent: 0, animated: false)
+                if let index = self?.options.firstIndex(of: cargo) {
+                    self?.pickerRolUser.reloadAllComponents()
+                    self?.pickerRolUser.selectRow(index, inComponent: 0, animated: false)
+                    self?.indexcargo = index
+                }else{
+                    self?.pickerRolUser.selectRow(0, inComponent: 0, animated: false)
+                }
+                self?.user = user
+                self?.email = email
             }
         }
         
@@ -94,8 +104,38 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             btnUpdate.setTitle("Actualizar", for: .normal)
             pickerRolUser.isUserInteractionEnabled  = true
             option = 1
+            self.datos()
         }else{
-            
+            let alerta = UIAlertController(title: "Actualizar", message: "¿Seguro que quiere guardar los cambios?", preferredStyle: .alert)
+            let btnCancelar = UIAlertAction(title: "Cancelar", style: .default, handler: nil)
+            let btnCrear = UIAlertAction(title: "Acertar", style: .default, handler: { [weak self] _ in
+                self?.btnUpdate.setTitle("Editar", for: .normal)
+                self?.btnSingOut.setTitle("Cerrar Sesion", for: .normal)
+                self?.btnSingOut.backgroundColor = UIColor.red
+                self?.btnSingOut.setTitleColor(UIColor.white, for: .normal)
+                self?.pickerRolUser.isUserInteractionEnabled = false
+                self?.option = 0
+                var dataUpdate = [
+                    "user":self?.txtNameUser.text!,
+                    "cargo":self?.selectedOption,
+                ]
+                let database = Database.database().reference()
+                let profileRef = database.child("usuarios").child((self?.userID)!).child("profile")
+                profileRef.updateChildValues(dataUpdate) { error, _ in
+                    if let error = error {
+                        print("Error al actualizar los datos: \(error.localizedDescription)")
+                    } else {
+                        let alerta = UIAlertController(title: "Actualizacion exitosa", message: "Se registraron los cambios conrrectamente", preferredStyle: .alert)
+                        let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler:nil )
+                        alerta.addAction(btnOK)
+                        self?.present(alerta, animated: true, completion: nil)
+                    }
+                }
+            })
+
+            alerta.addAction(btnCancelar)
+            alerta.addAction(btnCrear)
+            self.present(alerta, animated: true, completion: nil)
         }
     }
     
@@ -121,6 +161,10 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         label.textAlignment = .center
         return label
     }
-    
+    func datos(){
+        txtNameUser.text = self.user
+        txtEmailUser.text = self.email
+        pickerRolUser.selectRow(self.indexcargo, inComponent: 0, animated: false)
+    }
 
 }
