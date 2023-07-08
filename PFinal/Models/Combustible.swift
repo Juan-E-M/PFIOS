@@ -8,6 +8,7 @@
 import Foundation
 
 class Combustible{
+    var id = ""
     var factura = ""
     var km = ""
     var monto = ""
