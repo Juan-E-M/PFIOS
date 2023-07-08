@@ -282,9 +282,9 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case 0:
             performSegue(withIdentifier: "vercombustiblesegue", sender: registrosCombustibles[indexPath.row])
         case 1:
-            print("error")
+            performSegue(withIdentifier: "verpeajesegue", sender: registrosPeajes[indexPath.row])
         case 2:
-            print("error")
+            performSegue(withIdentifier: "verotrosegue", sender: registrosOtros[indexPath.row])
         default:
             print("error")
         }
@@ -293,12 +293,22 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "vercombustiblesegue" {
-                if let combustible = sender as? Combustible {
-                    let siguienteVC = segue.destination as! VerCombustibleViewController
-                    siguienteVC.combustible = combustible
-                }
+            if let combustible = sender as? Combustible {
+                let siguienteVC = segue.destination as! VerCombustibleViewController
+                siguienteVC.combustible = combustible
             }
-       }
+        } else if segue.identifier == "verpeajesegue" {
+            if let peaje = sender as? Peaje {
+                let siguienteVC = segue.destination as! VerPeajeViewController
+                siguienteVC.peaje = peaje
+            }
+        } else if segue.identifier == "verotrosegue" {
+            if let otro = sender as? Otro {
+                let siguienteVC = segue.destination as! VerOtrosViewController
+                siguienteVC.otro = otro
+            }
+        }
+    }
     
     
     
@@ -320,7 +330,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                        let urlFactura = combustibleData["urlfactura"] as? String,
                        let urlKm = combustibleData["urlkm"] as? String,
                        let monto = combustibleData["monto"] as? String {
-                        // Crea una instancia de Combustible y asigna los valores
+       
                         let comb = Combustible()
                         comb.factura = factura
                         comb.km = km

@@ -55,12 +55,16 @@ PODS:
   - GTMSessionFetcher/Core (3.1.1)
   - leveldb-library (1.22.2)
   - PromisesObjC (2.2.0)
+  - SDWebImage (5.16.0):
+    - SDWebImage/Core (= 5.16.0)
+  - SDWebImage/Core (5.16.0)
 
 DEPENDENCIES:
   - FirebaseAuth
   - FirebaseDatabase
   - FirebaseStorage
   - GoogleSignIn
+  - SDWebImage
 
 SPEC REPOS:
   trunk:
@@ -79,6 +83,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - PromisesObjC
+    - SDWebImage
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
@@ -96,7 +101,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
 
-PODFILE CHECKSUM: ccf75b36d3e00dcca667106742cd3ed49b5997d3
+PODFILE CHECKSUM: 7a1cbccb47d7bb982922d1821654cb4e5b52ebdc
 
 COCOAPODS: 1.12.1

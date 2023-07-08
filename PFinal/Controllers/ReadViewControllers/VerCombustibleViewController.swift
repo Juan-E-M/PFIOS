@@ -6,14 +6,27 @@
 //
 
 import UIKit
+import SDWebImage
 
 class VerCombustibleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        montoLabel.text = "Monto: S/. \(combustible.monto)"
+        facturaLabel.text = "Factura: \(combustible.factura)"
+        facturaImageView.sd_setImage(with: URL(string: combustible.urlfactura), completed: nil)
+        kmLabel.text = "Kilometraje: \(combustible.km)"
+        kmImageView.sd_setImage(with: URL(string: combustible.urlkm), completed: nil)
     }
+    
+    
+    @IBOutlet weak var montoLabel: UILabel!
+    @IBOutlet weak var facturaLabel: UILabel!
+    @IBOutlet weak var kmLabel: UILabel!
+    @IBOutlet weak var facturaImageView: UIImageView!
+    @IBOutlet weak var kmImageView: UIImageView!
+    
     
     var combustible = Combustible()
     

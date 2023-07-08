@@ -177,7 +177,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func uploadAudioToStorage(completion: @escaping (String?) -> Void) {
-        let audiosFolder = Storage.storage().reference().child("audios").child("traslados")
+        let audiosFolder = Storage.storage().reference().child("audios").child("otros")
         let audioData = try? Data(contentsOf: self.audioLocalURL!)
         let uploadAudio = audiosFolder.child("\(NSUUID().uuidString).m4a")
         
@@ -234,7 +234,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func uploadDataToDatabase(_ imageURLfactura: String?,_ audioURL: String?) {
         let dataFuel: [String: Any] = [
             "tipodocumento": self.TextTypeDocument,
-            "nrodocumento": self.TextDocument.text!,
+            "numerodocumento": self.TextDocument.text!,
             "autorizacion": self.TextAutorizacion,
             "monto": self.TextMonto.text!,
             "urlotros": imageURLfactura ?? "",
