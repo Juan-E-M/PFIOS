@@ -182,11 +182,11 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     func uploadDataToDatabase(_ imageURLfactura: String?,_ audioURL: String?) {
         let dataFuel: [String: Any] = [
-            "TipoDocument": self.TextTypeDocument,
-            "NroDocument": self.TextDocument.text!,
-            "Monto Total": self.TextMonto.text!,
+            "tipodocumento": self.TextTypeDocument,
+            "nrodocumento": self.TextDocument.text!,
+            "monto": self.TextMonto.text!,
             "urlotros": imageURLfactura ?? "",
-            "urlDescripcion" : audioURL ?? "",
+            "urldescripcion" : audioURL ?? "",
         ]
         let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Otros").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
