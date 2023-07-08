@@ -1062,7 +1062,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75J-KA-6BI">
-                                <rect key="frame" x="10" y="64" width="50" height="50"/>
+                                <rect key="frame" x="10" y="108" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="P7w-BH-9dX"/>
                                     <constraint firstAttribute="height" constant="50" id="QT2-HR-H1F"/>

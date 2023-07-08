@@ -14,8 +14,10 @@ import AVFoundation
 
 class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    let options = ["Opción 1", "Opción 2", "Opción 3"]
+    let options = ["Dni", "Pasaparte", "C. de Extranjeria"]
+    let options2 = ["Juan Escobar", "Luis Paucar", "Junior Molina", "Cristofer Rodriguez"]
     var TextTypeDocument = ""
+    var TextAutorizacion = ""
     var imagePicker = UIImagePickerController()
     var otrosImageSelected : UIImage?
     var imagenURLOtros = ""
@@ -32,16 +34,60 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return options.count // Número de filas en el selector
+        if pickerView == pickerViewDoc {
+                // Retorna el número de elementos para pickerView1
+            return options.count
+        } else if pickerView == pickerViewAutorizacion {
+                // Retorna el número de elementos para pickerView2
+            return options2.count
+        }
+            
+        return 0
+//        return options.count // Número de filas en el selector
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return options[row] // Texto para cada fila
+        if pickerView == pickerViewDoc {
+                // Retorna el título para la fila en pickerView1 en la posición 'row'
+            return options[row]
+        } else if pickerView == pickerViewAutorizacion {
+                // Retorna el título para la fila en pickerView2 en la posición 'row'
+            return options2[row]
+        }
+            
+            return nil
+//        return options[row] // Texto para cada fila
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        TextTypeDocument = options[row] // Obtiene el valor seleccionado
+        TextTypeDocument = options[pickerViewDoc.selectedRow(inComponent: 0)]
+        TextAutorizacion = options2[pickerViewAutorizacion.selectedRow(inComponent: 0)]
     }
+    
+//    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+//        var fontSize: CGFloat = 17.0 // Tamaño de fuente predeterminado
+//            
+//            if pickerView == pickerViewDoc {
+//                fontSize = 40.0 // Tamaño de fuente para el `pickerViewDoc`
+//            } else if pickerView == pickerViewAutorizacion {
+//                fontSize = 10.0 // Tamaño de fuente para el `pickerViewAutorizacion`
+//            }
+//            
+//            let title: String
+//            if pickerView == pickerViewDoc {
+//                title = options[row]
+//            } else if pickerView == pickerViewAutorizacion {
+//                title = options2[row]
+//            } else {
+//                title = ""
+//            }
+//            
+//            let attributedString = NSMutableAttributedString(string: title)
+//            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedString.length))
+//            
+//            return attributedString
+//    }
+    
     
 //
     
@@ -49,6 +95,11 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         super.viewDidLoad()
         pickerViewDoc.delegate = self
         pickerViewDoc.dataSource = self
+        
+        
+        pickerViewAutorizacion.delegate = self
+        pickerViewAutorizacion.dataSource = self
+        
         imagePicker.delegate = self
         configurarGrabacion()
         // Do any additional setup after loading the view.
@@ -89,7 +140,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     @IBAction func EnviarOtros(_ sender: Any) {
-        if TextDocument.text! != "" && TextMonto.text! != "" && otrosImageSelected != nil && TextTypeDocument != "" && audioLocalURL != nil{
+        if TextDocument.text! != "" && TextMonto.text! != "" && otrosImageSelected != nil && TextTypeDocument != "" && TextAutorizacion != "" && audioLocalURL != nil{
             
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage( self.otrosImageSelected!, dispatchGroup) { imagenurl in self.uploadAudioToStorage() { audioURL in
@@ -184,6 +235,7 @@ class OtrosViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         let dataFuel: [String: Any] = [
             "tipodocumento": self.TextTypeDocument,
             "nrodocumento": self.TextDocument.text!,
+            "autorizacion": self.TextAutorizacion,
             "monto": self.TextMonto.text!,
             "urlotros": imageURLfactura ?? "",
             "urldescripcion" : audioURL ?? "",

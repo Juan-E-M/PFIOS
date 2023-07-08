@@ -35,8 +35,8 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         print(destinationlat)
         print(destinationlon)
         
-        /*
-        if TextFactura.text! != "" && TextMonto.text! != "" && facturaImageSelected != nil {
+        
+        if TextFactura.text! != "" && TextMonto.text! != "" && destinationname != "" && destinationlat != "" && destinationlon != "" && facturaImageSelected != nil {
             
             let dispatchGroup = DispatchGroup()
             uploadImagesToStorage( self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
@@ -45,7 +45,7 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
-        }*/
+        }
     }
     
     @IBAction func BtnImagen(_ sender: Any) {
@@ -109,9 +109,12 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         let dataFuel: [String: Any] = [
             "factura": self.TextFactura.text!,
             "monto": self.TextMonto.text!,
+            "destino":destinationname,
+            "destinolatitud":destinationlat,
+            "destinolongitud":destinationlon,
             "urlfactura": imageURLfactura ?? ""
         ]
-        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("peajes").childByAutoId()
+        let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Peaje").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
             if let error = error {
                 print("Ocurrió un error al registrar el gasto de peaje: \(error)")
