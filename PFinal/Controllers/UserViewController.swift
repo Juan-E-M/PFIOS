@@ -108,11 +108,12 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }else{
             let alerta = UIAlertController(title: "Actualizar", message: "¿Seguro que quiere guardar los cambios?", preferredStyle: .alert)
             let btnCancelar = UIAlertAction(title: "Cancelar", style: .default, handler: nil)
-            let btnCrear = UIAlertAction(title: "Acertar", style: .default, handler: { [weak self] _ in
+            let btnCrear = UIAlertAction(title: "Aceptar", style: .default, handler: { [weak self] _ in
                 self?.btnUpdate.setTitle("Editar", for: .normal)
                 self?.btnSingOut.setTitle("Cerrar Sesion", for: .normal)
                 self?.btnSingOut.backgroundColor = UIColor.red
                 self?.btnSingOut.setTitleColor(UIColor.white, for: .normal)
+                self?.txtNameUser.isEnabled = false
                 self?.pickerRolUser.isUserInteractionEnabled = false
                 self?.option = 0
                 var dataUpdate = [
@@ -129,6 +130,17 @@ class UserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                         let btnOK = UIAlertAction(title: "Aceptar", style: .default, handler:nil )
                         alerta.addAction(btnOK)
                         self?.present(alerta, animated: true, completion: nil)
+                    }
+                }
+                self?.getuser{ [weak self] user, email, cargo in
+                    DispatchQueue.main.async {
+                        self?.user = user
+                        self?.email = email
+                        if let index = self?.options.firstIndex(of: cargo) {
+                            self?.indexcargo = index
+                        }else{
+                            self?.pickerRolUser.selectRow(0, inComponent: 0, animated: false)
+                        }
                     }
                 }
             })
