@@ -14,8 +14,8 @@ class VerPeajeViewController: UIViewController {
         montoLabel.text = "Monto: S/. \(peaje.monto)"
         facturaLabel.text = "Factura: \(peaje.factura)"
         destinoLabel.text = "Destino: \(peaje.destino)"
-        longitudLabel.text = "Destino: \(peaje.destinolongitud)"
-        latitudLabel.text = "Destino: \(peaje.destinolatitud)"
+        longitudLabel.text = "Longitud: \(peaje.destinolongitud)"
+        latitudLabel.text = "Latitud: \(peaje.destinolatitud)"
         
         facturaImageView.sd_setImage(with: URL(string: peaje.urlfactura), completed: nil)
         
