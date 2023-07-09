@@ -54,9 +54,9 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
             facturaImageButton.isEnabled = false
             BtnEnviar.isEnabled = false
             let dispatchGroup = DispatchGroup()
-            uploadImagesToStorage("km", kmImageSelected!, dispatchGroup) { imageURLkm in
-                self.uploadImagesToStorage("factura", self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
-                    self.uploadDataToDatabase(imageURLkm, imageURLfactura)
+            uploadImagesToStorage("km", kmImageSelected!, dispatchGroup) { imageURLkm,imagenKMID in
+                self.uploadImagesToStorage("factura", self.facturaImageSelected!, dispatchGroup) { imageURLfactura, imagenFacturaID in
+                    self.uploadDataToDatabase(imageURLkm, imageURLfactura,imagenFacturaID, imagenKMID)
                 }
             }
         } else {
@@ -96,8 +96,9 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
             present(alerta,  animated: true, completion: nil)
         }
     
-    func uploadImagesToStorage(_ child: String, _ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
-        let imagenesFolder = Storage.storage().reference().child("imagenes").child("combustible").child(child).child("\(NSUUID().uuidString).jpg")
+    func uploadImagesToStorage(_ child: String, _ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?,String?) -> Void) {
+        let imagenID = NSUUID().uuidString
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("combustible").child(child).child("\(imagenID).jpg")
         let imagenData = imagen.jpegData(compressionQuality: 0.5)
         
         dispatchGroup.enter()
@@ -105,17 +106,17 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
             if let error = error {
                 self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
                 print("Ocurrió un error al subir imagen: \(error)")
-                completion(nil)
+                completion(nil,nil)
             } else {
                 imagenesFolder.downloadURL(completion: { (url, error) in
                     if let url = url {
                         let imageURL = url.absoluteString
                         print("URL de la imagen subida: \(imageURL)")
-                        completion(imageURL)
+                        completion(imageURL,imagenID)
                     } else if let error = error{
                         print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
-                        completion(nil)
+                        completion(nil,nil)
                     }
                 })
             }
@@ -124,13 +125,15 @@ class CombustibleViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    func uploadDataToDatabase(_ imageURLkm: String?, _ imageURLfactura: String?) {
+    func uploadDataToDatabase(_ imageURLkm: String?, _ imageURLfactura: String?, _ idimagenfactura: String?, _ idimagenkm:String?) {
         let dataFuel: [String: Any] = [
             "factura": self.facturaTextField.text!,
             "monto": self.montoTotalTextField.text!,
             "km": self.kmTextField.text!,
             "urlkm": imageURLkm ?? "",
-            "urlfactura": imageURLfactura ?? ""
+            "urlfactura": imageURLfactura ?? "",
+            "idimagenfactura":idimagenfactura ?? "",
+            "idimagenkm":idimagenkm ?? "",
         ]
         let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in

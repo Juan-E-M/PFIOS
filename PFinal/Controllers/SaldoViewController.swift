@@ -173,7 +173,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     switch indexPath.section {
                     case 0:
                         let combustible = self.registrosCombustibles[indexPath.row]
-                        self.eliminarRegistroCombustible(combustible, combustible.urlfactura, combustible.urlkm)
+                        self.eliminarRegistroCombustible(combustible)
                     case 1:
                         let peaje = self.registrosPeajes[indexPath.row]
                         self.eliminarRegistroPeajes(peaje)
@@ -198,54 +198,29 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     //Funciones para eliminación de registros
-    func eliminarRegistroCombustible(_ comb: Combustible,_ urlfactura:String,_ urlkm:String ) {
-        let usuarioRef = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!)
-        let combustibleRef = usuarioRef.child("Combustible").child(comb.id)
-        
-        let group = DispatchGroup() // Crear el DispatchGroup
-        
-         // Registrar la primera tarea  
-        
-        
-        
-        let facturaRef = Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(urlfactura).jpg")
-        let kmRef = Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(urlkm).jpg")
-        
-        group.enter() // Registrar la segunda tarea
-        
-        facturaRef.delete { (error) in
+    func eliminarRegistroCombustible(_ comb: Combustible) {
+        Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Combustible").child(comb.id).removeValue { (error, _) in
             if let error = error {
-                print("Error al eliminar la imagen de factura: \(error)")
+                print("Error al eliminar el registro de combustible: \(error)")
+                return
             }
-            
-            group.leave() // Marcar la tarea como completada
-        }
-        
-        group.enter() // Registrar la tercera tarea
-        
-        kmRef.delete { (error) in
-            if let error = error {
-                print("Error al eliminar la imagen de km: \(error)")
+            Storage.storage().reference().child("imagenes").child("combustible").child("factura").child("\(comb.idimagenfactura).jpg").delete { (error) in
+                if let error = error {
+                    print("Error al eliminar la imagen: \(error)")
+                    return
+                }
+                Storage.storage().reference().child("imagenes").child("combustible").child("km").child("\(comb.idimagenkm).jpg").delete { (error) in
+                    if let error = error {
+                        print("Error al eliminar imagen: \(error)")
+                        return
+                    }
+                    
+                    self.registrosCombustibles.removeAll { $0.id == comb.id }
+                    self.tableView.reloadData()
+                    self.calcularSubmontoCombustible()
+                    self.calcularSaldoTotal()
+                }
             }
-            
-            group.leave() // Marcar la tarea como completada
-        }
-        group.enter()
-        combustibleRef.removeValue { (error, _) in
-            if let error = error {
-                print("Error al eliminar el registro de Combustible: \(error)")
-            }
-            
-            group.leave() // Marcar la tarea como completada
-        }
-        
-        group.notify(queue: .main) {
-            // Todas las tareas se han completado
-            
-            self.registrosCombustibles.removeAll { $0.id == comb.id }
-            self.tableView.reloadData()
-            self.calcularSubmontoCombustible()
-            self.calcularSaldoTotal()
         }
     }
     func calcularSubmontoCombustible() {
@@ -259,7 +234,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 print("Error al eliminar el registro de peajes: \(error)")
                 return
             }
-            Storage.storage().reference().child("imagenes").child("peajes").child("\(peaje.urlfactura).jpg").delete { (error) in
+            Storage.storage().reference().child("imagenes").child("peajes").child("\(peaje.idpeaje).jpg").delete { (error) in
                 if let error = error {
                     print("Error al eliminar la imagen de factura: \(error)")
                     return
@@ -363,7 +338,10 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                        let km = combustibleData["km"] as? String,
                        let urlFactura = combustibleData["urlfactura"] as? String,
                        let urlKm = combustibleData["urlkm"] as? String,
-                       let monto = combustibleData["monto"] as? String {
+                       let monto = combustibleData["monto"] as? String,
+                       let idimagenfactura = combustibleData["idimagenfactura"] as? String,
+                       let idimagenkm = combustibleData["idimagenkm"] as? String
+                    {
        
                         let comb = Combustible()
                         comb.factura = factura
@@ -372,6 +350,8 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         comb.urlkm = urlKm
                         comb.id = key
                         comb.monto = monto
+                        comb.idimagenfactura = idimagenfactura
+                        comb.idimagenkm = idimagenkm
                         
                         submontoTemp += Double(monto) ?? 0.0
                         self.registrosCombustibles.append(comb)
@@ -396,8 +376,8 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                        let monto = peajeData["monto"] as? String,
                        let destino = peajeData["destino"] as? String,
                        let destinolatitud = peajeData["destinolatitud"] as? String,
-                       let destinolongitud = peajeData["destinolongitud"] as? String
-                    {
+                       let destinolongitud = peajeData["destinolongitud"] as? String,
+                       let idpeaje = peajeData["idpeaje"] as? String {
                         let peaje = Peaje()
                         peaje.factura = factura
                         peaje.urlfactura = urlFactura
@@ -406,6 +386,7 @@ class SaldoViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         peaje.destino = destino
                         peaje.destinolatitud = destinolatitud
                         peaje.destinolongitud = destinolongitud
+                        peaje.idpeaje = idpeaje
                         
                         submontoTemp += Double(monto) ?? 0.0
                         self.registrosPeajes.append(peaje)

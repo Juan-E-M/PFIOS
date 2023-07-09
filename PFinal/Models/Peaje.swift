@@ -15,4 +15,5 @@ class Peaje{
     var destino = ""
     var destinolatitud = ""
     var destinolongitud = ""
+    var idpeaje = ""
 }

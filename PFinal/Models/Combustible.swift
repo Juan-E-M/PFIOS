@@ -14,5 +14,7 @@ class Combustible{
     var monto = ""
     var urlfactura = ""
     var urlkm = ""
+    var idimagenfactura = ""
+    var idimagenkm = ""
 }
 

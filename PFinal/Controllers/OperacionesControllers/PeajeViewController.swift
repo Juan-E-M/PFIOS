@@ -39,8 +39,8 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             BtnMapa.isEnabled = false
             BtnTextImageFactura.isEnabled = false
             let dispatchGroup = DispatchGroup()
-            uploadImagesToStorage( self.facturaImageSelected!, dispatchGroup) { imageURLfactura in
-                    self.uploadDataToDatabase( imageURLfactura)
+            uploadImagesToStorage( self.facturaImageSelected!, dispatchGroup) { imageURLfactura, imagenID in
+                    self.uploadDataToDatabase( imageURLfactura,imagenID)
                 }
         } else {
             self.mostrarAlertaEnvio(titulo: "Error", mensaje: "Complete todos los Campos. ", accion: "Aceptar")
@@ -76,8 +76,9 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             present(alerta,  animated: true, completion: nil)
     }
     
-    func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?) -> Void) {
-        let imagenesFolder = Storage.storage().reference().child("imagenes").child("peajes").child("\(NSUUID().uuidString).jpg")
+    func uploadImagesToStorage(_ imagen: UIImage, _ dispatchGroup: DispatchGroup, completion: @escaping (String?,String?) -> Void) {
+        let imagenID = NSUUID().uuidString
+        let imagenesFolder = Storage.storage().reference().child("imagenes").child("peajes").child("\(imagenID).jpg")
         let imagenData = imagen.jpegData(compressionQuality: 0.5)
         
         dispatchGroup.enter()
@@ -85,17 +86,17 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
             if let error = error {
                 self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al subir la imagen. Verifique ", accion: "Aceptar")
                 print("Ocurrió un error al subir imagen: \(error)")
-                completion(nil)
+                completion(nil,nil)
             } else {
                 imagenesFolder.downloadURL(completion: { (url, error) in
                     if let url = url {
                         let imageURL = url.absoluteString
                         print("URL de la imagen subida: \(imageURL)")
-                        completion(imageURL)
+                        completion(imageURL,imagenID)
                     } else if let error = error{
                         print("Ocurrió un error al obtener la URL de la imagen subida: \(error)")
                         self.mostrarAlerta(titulo: "Error", mensaje: "Se produjo un error al obtener información de la imagen", accion: "Cancelar")
-                        completion(nil)
+                        completion(nil,nil)
                     }
                 })
             }
@@ -104,14 +105,15 @@ class PeajeViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         }
     }
     
-    func uploadDataToDatabase(_ imageURLfactura: String?) {
+    func uploadDataToDatabase(_ imageURLfactura: String?,_ imagenID:String?) {
         let dataFuel: [String: Any] = [
             "factura": self.TextFactura.text!,
             "monto": self.TextMonto.text!,
             "destino":destinationname,
             "destinolatitud":destinationlat,
             "destinolongitud":destinationlon,
-            "urlfactura": imageURLfactura ?? ""
+            "urlfactura": imageURLfactura ?? "",
+            "idpeaje": imagenID ?? "",
         ]
         let ref = Database.database().reference().child("usuarios").child((Auth.auth().currentUser?.uid)!).child("Peaje").childByAutoId()
         ref.setValue(dataFuel) { (error, _) in
